@@ -1,9 +1,7 @@
-C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\libraries\EEPROM\EEPROM.cpp.o: \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\EEPROM\src\EEPROM.cpp \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\EEPROM\src\EEPROM.h \
+C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\libraries\FS\FS.cpp.o: \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src\FS.cpp \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src\FS.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Arduino.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/newlib/platform_include/stdio.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/qio_qspi/include/sdkconfig.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/esp_arduino_version.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/freertos/config/include/freertos/FreeRTOSConfig.h \
@@ -168,4 +166,4 @@ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\libraries\EE
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/freertos_stats.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/io_pin_remap.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Arduino.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/nvs_flash/include/nvs.h
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src\FSImpl.h

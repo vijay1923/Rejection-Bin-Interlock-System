@@ -1,8 +1,8 @@
-C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\r_bin_interlock_sys.ino.cpp.o: \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\r_bin_interlock_sys.ino.cpp \
+C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\libraries\SPIFFS\SPIFFS.cpp.o: \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\SPIFFS\src\SPIFFS.cpp \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src/vfs_api.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src/FS.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Arduino.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/newlib/platform_include/stdio.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/qio_qspi/include/sdkconfig.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/esp_arduino_version.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/freertos/config/include/freertos/FreeRTOSConfig.h \
@@ -167,17 +167,7 @@ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\r_bin
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/freertos_stats.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/io_pin_remap.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Arduino.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Wire\src/Wire.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/esp32-hal.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/esp32-hal-log.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/HardwareI2C.h \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\config.h \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\file_operations.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/WString.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src/FS.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\SPIFFS\src/SPIFFS.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FFat\src/FFat.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/wear_levelling/include/wear_levelling.h \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\io_operations.h \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\process.h \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\reject.h
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src/FSImpl.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/spiffs/include/esp_spiffs.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\SPIFFS\src\SPIFFS.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src/FS.h

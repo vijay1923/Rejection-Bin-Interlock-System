@@ -111,10 +111,10 @@
     }
   },
   {
-    "missing_include_h": "EEPROM.h"
+    "missing_include_h": "FS.h"
   },
   {
-    "added_include_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\EEPROM\\src"
+    "added_include_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src"
   },
   {
     "compile": {
@@ -158,7 +158,124 @@
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
-        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\EEPROM\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
+        "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp",
+        "-o",
+        "nul"
+      ]
+    }
+  },
+  {
+    "missing_include_h": "SPIFFS.h"
+  },
+  {
+    "added_include_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src"
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp",
+      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp.o",
+      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"windows\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/defines",
+        "-IC:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys",
+        "-iprefix",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/include/",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/includes",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/qio_qspi/include",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
+        "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp",
+        "-o",
+        "nul"
+      ]
+    }
+  },
+  {
+    "missing_include_h": "FFat.h"
+  },
+  {
+    "added_include_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src"
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp",
+      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp.o",
+      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"windows\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/defines",
+        "-IC:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys",
+        "-iprefix",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/include/",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/includes",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/qio_qspi/include",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
         "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp",
@@ -212,7 +329,9 @@
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
-        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\EEPROM\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
         "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src\\Wire.cpp",
@@ -226,9 +345,9 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\EEPROM\\src\\EEPROM.cpp",
-      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\EEPROM\\EEPROM.cpp.o",
-      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\EEPROM\\EEPROM.cpp.d"
+      "source_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src\\FS.cpp",
+      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\FS\\FS.cpp.o",
+      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\FS\\FS.cpp.d"
     },
     "compile_task": {
       "args": [
@@ -266,10 +385,180 @@
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
-        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\EEPROM\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
-        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\EEPROM\\src\\EEPROM.cpp",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src\\FS.cpp",
+        "-o",
+        "nul"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src\\vfs_api.cpp",
+      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\FS\\vfs_api.cpp.o",
+      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\FS\\vfs_api.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"windows\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/defines",
+        "-IC:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys",
+        "-iprefix",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/include/",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/includes",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/qio_qspi/include",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src\\vfs_api.cpp",
+        "-o",
+        "nul"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src\\SPIFFS.cpp",
+      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\SPIFFS\\SPIFFS.cpp.o",
+      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\SPIFFS\\SPIFFS.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"windows\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/defines",
+        "-IC:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys",
+        "-iprefix",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/include/",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/includes",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/qio_qspi/include",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src\\SPIFFS.cpp",
+        "-o",
+        "nul"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src\\FFat.cpp",
+      "object_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\FFat\\FFat.cpp.o",
+      "depfile_path": "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\libraries\\FFat\\FFat.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"windows\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/defines",
+        "-IC:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys",
+        "-iprefix",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/include/",
+        "@C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/flags/includes",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32/qio_qspi/include",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
+        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
+        "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src\\FFat.cpp",
         "-o",
         "nul"
       ]
