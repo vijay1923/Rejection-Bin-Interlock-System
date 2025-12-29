@@ -143,4 +143,3 @@ Output Includes:
 ## 👨‍🔧 Author
 
 **Vijay Magadum**  
-Embedsol Technologies LLP
