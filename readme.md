@@ -84,14 +84,14 @@ Boot 101: ⚡ DELETE start_1 to start_100
 
 ## 📁 File Structure & Description
 
-| File                  | Lines | Purpose                                                    |
-|-----------------------|-------|------------------------------------------------------------|
-| `main.ino`            | ~100  | Main program loop, initialization sequence, input polling  |
-| `config.h`            | ~60   | Pin definitions, I2C addresses, global variables, constants|
-| `file_operations.h`   | ~180  | SPIFFS init, boot tracking, session files, state management|
-| `io_operations.h`     | ~80   | PCF8574 read/write, output control, buzzer blinking        |
-| `process.h`           | ~60   | Button event handlers (AUTO, REJECT)                       |
-| `reject.h`            | ~70   | Dual-sensor slot detection, rejection sequence handling    |
+| File                  | Purpose                                                    |
+|-----------------------|------------------------------------------------------------|
+| `main.ino`            | Main program loop, initialization sequence, input polling  |
+| `config.h`            | Pin definitions, I2C addresses, global variables, constants|
+| `file_operations.h`   | SPIFFS init, boot tracking, session files, state management|
+| `io_operations.h`     | PCF8574 read/write, output control, buzzer blinking        |
+| `process.h`           | Button event handlers (AUTO, REJECT)                       |
+| `reject.h`            | Dual-sensor slot detection, rejection sequence handling    |
 
 **Total Project Size:** ~550 lines of code
 
