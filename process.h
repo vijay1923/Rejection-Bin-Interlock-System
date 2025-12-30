@@ -29,7 +29,7 @@ void auto_button_handler()
 {
     if (state.machine_mode) 
     {
-        Serial.println("[BUTTON] AUTO ignored - still in REJECT mode");
+        Serial.println("AUTO ignored - still in REJECT mode");
         return;
     }
     

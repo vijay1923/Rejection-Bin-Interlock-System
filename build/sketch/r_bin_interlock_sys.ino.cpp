@@ -7,17 +7,15 @@
 #include "process.h"
 #include "reject.h"
 
-
-#line 9 "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\r_bin_interlock_sys.ino"
+#line 8 "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\r_bin_interlock_sys.ino"
 void setup();
-#line 59 "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\r_bin_interlock_sys.ino"
+#line 52 "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\r_bin_interlock_sys.ino"
 void loop();
-#line 9 "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\r_bin_interlock_sys.ino"
+#line 8 "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\r_bin_interlock_sys.ino"
 void setup() 
 {
     Serial.begin(115200);
-       
-    // Initialize I2C
+    Serial.println("WELCOME ESP32 : REJECTION BIN INTERLOCKING SYSTEM");
     Wire.begin(21, 22);
     Wire.setClock(100000);
     
@@ -31,41 +29,35 @@ void setup()
     Wire.write(0x00);
     Wire.endTransmission();
     
-    // Initialize filesystem
     init_filesystem();
-    read_state();   // get stored data from memory 
+    init_boot_number();
+    init_total_count();
+    read_state();
+     Serial.println("-------------SYSTEM STATUS -------------");
+    Serial.printf("Boot Number:          %lu\n", current_boot_number);
+    Serial.printf("Session Count:        %lu\n", current_session_count);
+    Serial.printf("Lifetime Total:       %lu\n", total_lifetime_count);
+    Serial.printf("Machine Mode:         %s\n", state.machine_mode ? "REJECT" : "AUTO");
     
-    // Print last machine data 
-    Serial.println("STATE Restored from memory:-");
-    Serial.printf("Reject Count: %lu\n", state.reject_count);
-    Serial.printf("Reject Mode: %s\n", state.machine_mode ? "YES - waiting for part in Bin " : "NO");
+    machine_status = false;
+    relay_output(false);
     
-    // Safety: Always start with relay OFF
-    machine_status = false;   // default machine off 
-    relay_output(false);     // off relay output 
-     
-    Serial.println("WELCOME ESP32 : REJECTION BIN INTERLOCKING SYSTEM  ");
-    
-    if (state.machine_mode) // if machine was in reject mode before restart / power off 
+    if (state.machine_mode) 
     {
         Serial.println("SYSTEM IN REJECT MODE");
-        Serial.println("Waiting for part confirmation...");
+        Serial.println("Waiting for part confirmation in bin...");
         Serial.println("Buzzer/LED Alert ACTIVE");
     } 
     else 
     {
-        Serial.println("System Ready");
+        Serial.println("SYSTEM READY");
         Serial.println("Press AUTO button to start machine");
     }
-    
-    // Read initial input state
     prev_inputs = read_inputs();
 }
 
-
 void loop() 
 {
-    // poll pcf  
     if (millis() - last_poll_time >= POLL_INTERVAL) 
     {
         last_poll_time = millis();
@@ -84,7 +76,5 @@ void loop()
         // Update previous state
         prev_inputs = current_inputs;
     }
-    
-    // Continuously update outputs (for buzzer blinking)
     update_outputs();
 }

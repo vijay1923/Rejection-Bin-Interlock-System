@@ -173,11 +173,8 @@ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\r_bin
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/HardwareI2C.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\config.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\file_operations.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/WString.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FS\src/FS.h \
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\SPIFFS\src/SPIFFS.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\FFat\src/FFat.h \
- C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/wear_levelling/include/wear_levelling.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\io_operations.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\process.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\reject.h

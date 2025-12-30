@@ -42,7 +42,6 @@
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src",
         "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src",
-        "-IC:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FFat\\src",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/build_opt.h",
         "@C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build/file_opts",
         "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys\\build\\sketch\\r_bin_interlock_sys.ino.cpp",
