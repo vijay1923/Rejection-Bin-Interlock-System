@@ -9,7 +9,7 @@
 void printHelp()
 {
     Serial.println("---------------- HELP CENTER -------------");
-    Serial.println("Commands:");
+    Serial.println("Serial Commands :");
     Serial.println(" LIST");
     Serial.println("   - Print all stored file data");
     Serial.println();
@@ -20,6 +20,10 @@ void printHelp()
     Serial.println(" HELP");
     Serial.println("   - Show this help information");
     Serial.println();
+    Serial.println(" Web Server : ");
+    Serial.println(" - Connect to the Wifi ");
+    Serial.println(" - SSID - RejectionBin_AP PASS - rejection ");
+    Serial.println(" - Open 192.168.1.21 on Browser");
     Serial.println("Files:");
     Serial.println(" /boot_number.txt   - total power cycles");
     Serial.println(" /total_count.txt   - lifetime reject count");
@@ -51,7 +55,7 @@ void readFile(const String &filepath)
         Serial.write(file.read());
     }
 
-    Serial.println();   // newline after file data
+    Serial.println();  
     file.close();
 }
 

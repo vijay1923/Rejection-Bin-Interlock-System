@@ -177,4 +177,64 @@ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\r_bin
  C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\SPIFFS\src/SPIFFS.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\io_operations.h \
  C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\process.h \
- C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\reject.h
+ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\reject.h \
+ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\serial_cmd.h \
+ C:\Users\Shree\Documents\Arduino\Embedsol\r_bin_interlock_sys\build\sketch\web_server.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFi.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Print.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiType.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_wifi/include/esp_wifi_types.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_wifi/include/esp_wifi_types_generic.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_event/include/esp_event_base.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_hw_support/include/esp_interface.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_wifi/include/local/esp_wifi_types_native.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_wifi/include/esp_wifi_types_generic.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiSTA.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiGeneric.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_event/include/esp_event.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_wifi/include/esp_smartconfig.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_netif/include/esp_netif_types.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_netif/include/esp_netif_ip_addr.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_driver.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_com.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/hal/include/hal/eth_types.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_spec.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_mac_spi.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_mac.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_driver_spi/include/driver/spi_master.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/hal/esp32/include/hal/spi_types.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/hal/include/hal/spi_types.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_driver_spi/include/driver/spi_common.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_system/include/esp_ipc.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_mac_esp.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_eth/include/esp_eth_phy.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/espressif__network_provisioning/include/network_provisioning/manager.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/protocomm/include/common/protocomm.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/protocomm/include/security/protocomm_security.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/espressif__network_provisioning/include/network_provisioning/network_config.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/Network.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkInterface.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Printable.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkEvents.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkManager.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/WString.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkClient.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Client.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkServer.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Server.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkUdp.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/Udp.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\cores\esp32/cbuf.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/esp_ringbuf/include/freertos/ringbuf.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiAP.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiScan.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiClient.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiServer.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WiFi\src/WiFiUdp.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\Network\src/NetworkUdp.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WebServer\src/WebServer.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WebServer\src/HTTP_Method.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.5-9bb7aa84-v2\esp32/include/http_parser/http_parser.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WebServer\src/Uri.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WebServer\src/middleware/Middleware.h \
+ C:\Users\Shree\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.5\libraries\WebServer\src/detail/RequestHandler.h
