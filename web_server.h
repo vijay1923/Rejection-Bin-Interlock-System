@@ -73,8 +73,10 @@ void handleRoot() {
     
     html += "<div class='card'><h2>📁 Core Files</h2>";
     String coreFiles[] = {"/boot_number.txt", "/total_count.txt", "/state.txt"};
-    for (int i = 0; i < 3; i++) {
-        if (SPIFFS.exists(coreFiles[i])) {
+    for (int i = 0; i < 3; i++) 
+    {
+        if (SPIFFS.exists(coreFiles[i])) 
+        {
             File f = SPIFFS.open(coreFiles[i]);
             html += "<div class='file'><span class='file-name'>" + coreFiles[i] + " (" + String(f.size()) + "B)</span>";
             html += "<a href='/view?file=" + coreFiles[i] + "' class='btn btn-v'>View</a>";
@@ -89,7 +91,8 @@ void handleRoot() {
     int startFrom = (current_boot_number > 3) ? current_boot_number - 2 : 1;
     for (int i = current_boot_number; i >= startFrom && count < 3; i--) {
         String path = "/start_" + String(i) + ".txt";
-        if (SPIFFS.exists(path)) {
+        if (SPIFFS.exists(path)) 
+        {
             File f = SPIFFS.open(path);
             html += "<div class='file'><span class='file-name'>" + path + " (" + String(f.size()) + "B)</span>";
             html += "<a href='/view?file=" + path + "' class='btn btn-v'>View</a>";

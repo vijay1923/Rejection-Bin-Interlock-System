@@ -22,7 +22,7 @@ This project implements an advanced industrial rejection bin interlocking system
 ## 🆕 What's New in v2.0
 
 ### **Multi-File Storage System**
-| File Type          | Purpose                              | Retention      |
+| File Name          | Purpose                              | Retention      |
 |--------------------|--------------------------------------|----------------|
 | `/boot_number.txt` | Total power cycles (never resets)    | Forever        |
 | `/total_count.txt` | Lifetime reject count (never resets) | Forever        |

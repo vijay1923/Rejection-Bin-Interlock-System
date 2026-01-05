@@ -2,47 +2,58 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
+// Forward declarations of handler functions
 void auto_button_handler();
 void reject_button_handler();
 
+// Main function to process detected input events (button presses or sensor triggers)
 void process_inputs(uint8_t edge) 
 {
-    // Priority 1: Button handling
+    // Check if AUTO button was pressed (rising edge detected)
     if (edge & (1 << BTN_AUTO)) 
     {
-        auto_button_handler();
+        auto_button_handler();  // Handle AUTO button press
     }
     
+    // Check if REJECT button was pressed (rising edge detected)
     if (edge & (1 << BTN_REJECT)) 
     {
-        reject_button_handler();
+        reject_button_handler();  // Handle REJECT button press
     }
     
-    // Priority 2: Slot detection (only in reject mode)
+    // Check for slot sensor detection (handles A and B sensor sequences)
     reject_handler(edge);
-    
-    // Priority 3: Part removal 
-    // handle_part_removal(edge);
 }
 
-
+// Handler for AUTO button press - starts/resumes machine operation
 void auto_button_handler() 
 {
+    // Prevent AUTO mode activation if system is still in REJECT mode
+    // Operator must confirm part in bin before resuming
     if (state.machine_mode) 
     {
         Serial.println("AUTO ignored - still in REJECT mode");
         return;
     }
     
-    Serial.println("AUTO MODE - MACHINE RUNNING");    
+    Serial.println("AUTO MODE - MACHINE RUNNING");
+    
+    // Set machine to AUTO mode (normal operation)
     state.machine_mode = false;
-    active_slot = 0;
+    active_slot = 0;  // Clear any active slot tracking
+    
+    // Save machine mode to persistent storage
     write_state();
+    
+    // Turn on machine relay (start production)
     relay_output(true);
 }
 
+// Handler for REJECT button press - stops machine and enters rejection mode
 void reject_button_handler() 
 {
+    // Only allow REJECT mode if machine is currently running
+    // Prevents rejecting parts when machine is already stopped
     if (!machine_status) 
     {
         Serial.println("[BUTTON] REJECT ignored - machine not running");
@@ -52,12 +63,15 @@ void reject_button_handler()
     Serial.println("REJECT MODE - MACHINE STOPPED");
     Serial.println("Waiting for part in rejection bin...");
     
+    // Set machine to REJECT mode (waiting for part confirmation)
     state.machine_mode = true;
-    active_slot = 0;
+    active_slot = 0;  // Reset slot tracking for new sequence
+    
+    // Save machine mode to persistent storage
     write_state();
+    
+    // Turn off machine relay (stop production)
     relay_output(false);
 }
 
-
-
-#endif 
+#endif

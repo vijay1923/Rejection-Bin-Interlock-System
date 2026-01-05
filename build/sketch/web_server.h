@@ -11,8 +11,8 @@
 
 #define AP_SSID "RejectionBin_AP"
 #define AP_PASSWORD "rejectionbin"
-#define AP_IP IPAddress(192, 168, 4, 1)
-#define AP_GATEWAY IPAddress(192, 168, 4, 1)
+#define AP_IP IPAddress(192, 168, 1, 21)
+#define AP_GATEWAY IPAddress(192, 168, 1, 21)
 #define AP_SUBNET IPAddress(255, 255, 255, 0)
 
 WebServer server(80);
@@ -74,8 +74,10 @@ void handleRoot() {
     
     html += "<div class='card'><h2>📁 Core Files</h2>";
     String coreFiles[] = {"/boot_number.txt", "/total_count.txt", "/state.txt"};
-    for (int i = 0; i < 3; i++) {
-        if (SPIFFS.exists(coreFiles[i])) {
+    for (int i = 0; i < 3; i++) 
+    {
+        if (SPIFFS.exists(coreFiles[i])) 
+        {
             File f = SPIFFS.open(coreFiles[i]);
             html += "<div class='file'><span class='file-name'>" + coreFiles[i] + " (" + String(f.size()) + "B)</span>";
             html += "<a href='/view?file=" + coreFiles[i] + "' class='btn btn-v'>View</a>";
@@ -90,7 +92,8 @@ void handleRoot() {
     int startFrom = (current_boot_number > 3) ? current_boot_number - 2 : 1;
     for (int i = current_boot_number; i >= startFrom && count < 3; i--) {
         String path = "/start_" + String(i) + ".txt";
-        if (SPIFFS.exists(path)) {
+        if (SPIFFS.exists(path)) 
+        {
             File f = SPIFFS.open(path);
             html += "<div class='file'><span class='file-name'>" + path + " (" + String(f.size()) + "B)</span>";
             html += "<a href='/view?file=" + path + "' class='btn btn-v'>View</a>";
@@ -210,9 +213,11 @@ void handleDownloadAll() {
     }
     
     data += "\n=== SESSION FILES ===\n";
-    for (int i = 1; i <= current_boot_number; i++) {
+    for (int i = 1; i <= current_boot_number; i++) 
+    {
         String path = "/start_" + String(i) + ".txt";
-        if (SPIFFS.exists(path)) {
+        if (SPIFFS.exists(path)) 
+        {
             File f = SPIFFS.open(path);
             data += "Boot " + String(i) + ": ";
             while (f.available()) data += (char)f.read();
@@ -226,7 +231,8 @@ void handleDownloadAll() {
 }
 
 // Initialize
-void initWebServer() {
+void initWebServer() 
+{
     Serial.println("=== WEB SERVER INIT ===");
     
     WiFi.mode(WIFI_AP);
