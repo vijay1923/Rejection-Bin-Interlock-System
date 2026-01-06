@@ -14,7 +14,7 @@ void printHelp()
     
     // LIST command - displays all files stored in SPIFFS
     Serial.println(" LIST");
-    Serial.println("   - Print all stored file data");
+    Serial.println("   - Print all stored file with data");
     Serial.println();
     
     // READ command - displays content of a specific file
