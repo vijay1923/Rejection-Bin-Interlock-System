@@ -68,8 +68,8 @@ void reject_handler(uint8_t edge)
         // Updates both the current session file and the lifetime total count file
         save_reject_count();
         
-        // Send confirmation pulse to PLC/machine (200ms pulse on OUT_PULSE pin)
-        pulse_output(OUT_PULSE, 200);
+        // // Send confirmation pulse to PLC/machine (200ms pulse on OUT_PULSE pin)
+        // pulse_output(OUT_PULSE, 200);
         
         // Display confirmation results on serial monitor
         Serial.printf("Part Confirmed in Slot %d\n", slot);

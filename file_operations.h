@@ -5,7 +5,6 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-
 // Function to verify filesystem integrity (detects corruption from power loss)
 // Returns true if filesystem is healthy, false if corrupted
 bool verify_filesystem_integrity() 
@@ -94,16 +93,16 @@ void init_filesystem()
     Serial.println("SPIFFS Mounted successfully");
     
     // Verify filesystem integrity (detects corruption from power loss)
-    if (!verify_filesystem_integrity()) 
-    {
-        Serial.println("Corruption detected! Reformatting...");
-        SPIFFS.end();
-        SPIFFS.format();
-        SPIFFS.begin(false);
-    }
+    // if (!verify_filesystem_integrity()) 
+    // {
+    //     Serial.println("Corruption detected! Reformatting...");
+    //     SPIFFS.end();
+    //     SPIFFS.format();
+    //     SPIFFS.begin(false);
+    // }
     
     // Check version compatibility (handles firmware updates with file structure changes)
-    check_spiffs_version();
+  //  check_spiffs_version();
     
     // Print filesystem info
     size_t total = SPIFFS.totalBytes();

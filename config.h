@@ -9,19 +9,19 @@
 
 #define MAX_START_FILES 100     // Keep last 100 boot session files
 
-#define BTN_AUTO        0       // AUTO button
-#define BTN_REJECT      1       // REJECT/E-STOP button
-#define SLOT1_A         2       // Slot 1 Sensor A (front)
-#define SLOT1_B         3       // Slot 1 Sensor B (back)
-#define SLOT2_A         4       // Slot 2 Sensor A (front)
-#define SLOT2_B         5       // Slot 2 Sensor B (back)
-#define SLOT3_A         6       // Slot 3 Sensor A (front)
-#define SLOT3_B         7       // Slot 3 Sensor B (back)
+#define BTN_AUTO        7       // AUTO button
+#define BTN_REJECT      6       // REJECT/E-STOP button
+#define SLOT1_A         5       // Slot 1 Sensor A (front)
+#define SLOT1_B         4       // Slot 1 Sensor B (back)
+#define SLOT2_A         3       // Slot 2 Sensor A (front)
+#define SLOT2_B         2       // Slot 2 Sensor B (back)
+#define SLOT3_A         1       // Slot 3 Sensor A (front)
+#define SLOT3_B         0       // Slot 3 Sensor B (back)
 
 #define RELAY_AUTO      0       // AUTO relay to PLC
 #define LED_REJECT      1       // REJECT mode indicator
-#define OUT_PULSE       2       // Confirmation pulse output
-#define BUZZER_LED      7       // Buzzer/LED for reject alert (blinks & beeps)
+#define BUZZER_LED      2       // Buzzer/LED for reject alert (blinks & beeps)
+
 
 struct MachineState
 {
@@ -41,6 +41,8 @@ bool buzzer_state = false;          // Current buzzer on/off state
 uint32_t current_boot_number = 0;   // Current boot/restart number
 uint32_t current_session_count = 0; // Reject count for current boot session
 uint32_t total_lifetime_count = 0;  // Total rejects across all boots
+// SPIFFS version tracking - increment when file structure changes in firmware updates
+#define SPIFFS_VERSION 1
 
 void auto_button_handler();
 void reject_button_handler();
