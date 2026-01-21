@@ -2,17 +2,33 @@
 #define REJECT_H
 #include "config.h"
 
-// Function to start monitoring after A→B sequence
+// Function to start continuous monitoring after A→B sequence
 void start_monitoring(uint8_t slot)
 {
     monitoring_active = true;
-    monitoring_start_time = millis();
     monitored_slot = slot;
-    Serial.printf("[MONITORING] Started for Slot %d - checking for removal (Duration: %d ms)\n", slot, MONITORING_DURATION);
+    part_counted = false;  // Part not yet counted
+    monitoring_last_sensor = 0;  // Reset sensor tracking
+    Serial.printf("[MONITORING] Started continuous monitoring for Slot %d\n", slot);
+    Serial.println("[MONITORING] Part will be counted when AUTO or REJECT button is pressed");
+    Serial.println("[MONITORING] B→A removal will trigger immediate alert!");
 }
 
-// Unified continuous monitoring function - detects B→A cheating sequence
-// Continuously monitors until AUTO or REJECT button is pressed
+// Stop monitoring and clear all monitoring states
+void stop_monitoring()
+{
+    if (monitoring_active)
+    {
+        Serial.printf("[MONITORING] Stopped monitoring for Slot %d\n", monitored_slot);
+    }
+    monitoring_active = false;
+    monitored_slot = 0;
+    monitoring_last_sensor = 0;
+    part_counted = false;
+}
+
+// Continuous monitoring function - detects B→A cheating sequence at any time
+// Runs continuously until AUTO or REJECT button is pressed
 void check_monitoring(uint8_t current_inputs)
 {
     if (!monitoring_active) return;  // Exit if monitoring is not active
@@ -49,39 +65,40 @@ void check_monitoring(uint8_t current_inputs)
     if (current_sensor == 1 && monitoring_last_sensor == 2)
     {
         // B→A sequence detected = Part being pulled out = CHEATING!
-        unsigned long elapsed = millis() - monitoring_start_time;
-        bool part_already_counted = (elapsed >= MONITORING_DURATION) && part_count_incremented;
         
-        if (part_already_counted)
+        if (part_counted)
         {
-            Serial.printf("[CHEATING DETECTED!] B→A removal sequence - Illegal removal of counted part (Slot %d)\n", monitored_slot);
-            Serial.println("SYSTEM STOPPING - Part already counted, cannot be removed!");
+            // Part was already counted - SERIOUS VIOLATION
+            Serial.println(" ############### CRITICAL CHEATING DETECTED! ################");
+            Serial.printf("[ALERT] B→A removal in Slot %d - COUNTED part removed!\n", monitored_slot);
+            Serial.println("[ALERT] This is a SERIOUS violation - part was already counted!");
         }
         else
         {
-            Serial.printf("[CHEATING DETECTED!] B→A removal sequence - Part being removed before confirmation (Slot %d)\n", monitored_slot);
-            Serial.println("Part being removed - Count NOT incremented!");
+            // Part not yet counted - removal before confirmation
+            Serial.println("################ CHEATING DETECTED! ################");
+            Serial.printf("[ALERT] B→A removal in Slot %d - Part removed before counting!\n", monitored_slot);
+            Serial.println("[ALERT] Part must be re-confirmed in bin!");
         }
         
         // RESET AND STOP MACHINE IMMEDIATELY
-        monitoring_active = false;
-        part_count_incremented = false;
-        monitoring_last_sensor = 0;
+        stop_monitoring();  // Clear all monitoring states
         active_slot = 0;
-        monitored_slot = 0;
         
         // Stop machine immediately
-        state.machine_mode = true;  // Enter REJECT mode to stop
+        state.machine_mode = true;  // Enter REJECT mode
         relay_output(false);  // Turn off machine relay
-        write_state();
+        eeprom_write_machine_mode();  // Save to EEPROM
         
         // Alert operator with emergency beeps
-        Serial.println("[SYSTEM STOPPED] Machine halted due to cheating detection!");
+        Serial.println("\n[SYSTEM STOPPED] Machine halted - Cheating detected!");
         Serial.printf("Session Count: %lu\n", current_session_count);
         Serial.printf("Lifetime Count: %lu\n", total_lifetime_count);
-        trigger_beep();  // Alert beep
-        trigger_beep();  // Double beep for alarm
-        trigger_beep();  // Triple beep = EMERGENCY
+        Serial.println("System locked - Re-confirm part in bin to continue\n");
+        
+        trigger_beep();  // Triple beep = EMERGENCY ALERT for cheating detection
+        trigger_beep();
+        trigger_beep();
         return;
     }
     
@@ -90,25 +107,28 @@ void check_monitoring(uint8_t current_inputs)
     {
         monitoring_last_sensor = current_sensor;  // Track which sensor is active
     }
+}
+
+// Function to increment count when AUTO or REJECT button is pressed
+void increment_part_count()
+{
+    if (!monitoring_active || part_counted)
+        return;  // Only count if monitoring is active and part not yet counted
     
-    // ===== CHECK IF 5-SECOND MONITORING PERIOD HAS COMPLETED =====
-    unsigned long elapsed = millis() - monitoring_start_time;
+    // Mark part as counted
+    part_counted = true;
     
-    if (elapsed >= MONITORING_DURATION && !part_count_incremented)
-    {
-        // Monitoring period passed without B→A cheating - SAFE TO COUNT
-        part_count_incremented = true;  // Mark as counted
-        
-        // Increment count NOW (after 5-second safety period passed)
-        save_reject_count();
-        
-        Serial.println("\n[MONITORING] 5-second safety period complete - Part confirmed safe!");
-        Serial.printf("Part Confirmed in Slot %d (no B→A removal detected)\n", monitored_slot);
-        Serial.printf("Session Count (Boot #%lu): %lu\n", current_boot_number, current_session_count);
-        Serial.printf("Lifetime Total Count: %lu\n", total_lifetime_count);
-        Serial.println("[CONTINUOUS CHECK] Monitoring for post-count removal attempts...");
-        Serial.println("Part is now locked - B→A sequence will trigger alert!\n");
-    }
+    // Increment counts
+    eeprom_increment_lifetime_count();     // Increment and save lifetime count to EEPROM
+    save_session_reject_count();          // Increment and save session count to SPIFFS
+    
+    Serial.println("-----------------------------------------");
+    Serial.printf("Part confirmed in Slot %d - Count incremented\n", monitored_slot);
+    Serial.printf("Session Count (Boot #%lu): %lu\n", current_boot_number, current_session_count);
+    Serial.printf("Lifetime Total Count: %lu\n", total_lifetime_count);
+    Serial.println("\n[MONITORING] Continuous monitoring still active");
+    Serial.println("[WARNING] Part is now LOCKED - B→A removal will trigger alert!\n");
+    Serial.println("-----------------------------------------");
 }
 
 // Function to handle rejection bin sensor sequence detection and confirmation
@@ -124,21 +144,21 @@ void reject_handler(uint8_t edge)
         if (edge & (1 << SLOT1_A)) 
         {
             active_slot = 1;
-            Serial.println("[SENSOR] Slot 1A detected - waiting for 1B...");
-            trigger_beep();  //  Beep when Sensor A triggers
+            Serial.println("\n[SENSOR] Slot 1A detected - waiting for 1B...");
+            trigger_beep();  // Beep when Sensor A triggers
         }
         // Check if Slot 2's first sensor (2A) was triggered
         else if (edge & (1 << SLOT2_A)) 
         {
             active_slot = 2;
-            Serial.println("[SENSOR] Slot 2A detected - waiting for 2B...");
-            trigger_beep();  //  Beep when Sensor A triggers
+            Serial.println("\n[SENSOR] Slot 2A detected - waiting for 2B...");
+            trigger_beep();  // Beep when Sensor A triggers
         }
         // Check if Slot 3's first sensor (3A) was triggered
         else if (edge & (1 << SLOT3_A)) 
         {
             active_slot = 3;
-            Serial.println("[SENSOR] Slot 3A detected - waiting for 3B...");
+            Serial.println("\n[SENSOR] Slot 3A detected - waiting for 3B...");
             trigger_beep();  // Beep when Sensor A triggers
         }
         return;
@@ -151,28 +171,35 @@ void reject_handler(uint8_t edge)
     if (active_slot == 1 && (edge & (1 << SLOT1_B))) 
     {
         valid_sequence = true;
-        Serial.println("Slot-1: B detected, Sequence complete");
+        Serial.println("[SENSOR] Slot 1B detected - A→B sequence complete!");
         trigger_beep();  // Beep when Sensor B triggers
     }
     // Check if Slot 2's second sensor (2B) was triggered after 2A
     else if (active_slot == 2 && (edge & (1 << SLOT2_B))) 
     {
         valid_sequence = true;   
-        Serial.println("Slot-2: B detected, Sequence complete");
-        trigger_beep();  //Beep when Sensor B triggers
+        Serial.println("[SENSOR] Slot 2B detected - A→B sequence complete!");
+        trigger_beep();  // Beep when Sensor B triggers
     }
     // Check if Slot 3's second sensor (3B) was triggered after 3A
     else if (active_slot == 3 && (edge & (1 << SLOT3_B))) 
     {
         valid_sequence = true;   
-        Serial.println("Slot-3: B detected, Sequence complete");
-        trigger_beep();  //  Beep when Sensor B triggers
+        Serial.println("[SENSOR] Slot 3B detected - A→B sequence complete!");
+        trigger_beep();  // Beep when Sensor B triggers
     }
     
     // If both sensors in sequence were triggered
     if (valid_sequence) 
     {
-        Serial.printf("[SENSOR] Slot %d B detected - A→B sequence complete\n", active_slot);
+        Serial.printf("\n[CONFIRMED] Part detected in Slot %d - Sequence validated\n", active_slot);
+        
+        // If there was a previous part being monitored, count it now
+        if (monitoring_active && !part_counted)
+        {
+            Serial.println("[AUTO-COUNT] Previous part being counted before new part...");
+            increment_part_count();
+        }
         
         // Switch system back to AUTO mode
         state.machine_mode = false;
@@ -180,16 +207,17 @@ void reject_handler(uint8_t edge)
         uint8_t slot = active_slot;
         active_slot = 0;
         
-        // Save state
-        write_state();
+        // Save state to EEPROM
+        eeprom_write_machine_mode();
         
-        // Start monitoring for cheating attempts
+        // Start continuous monitoring for this part
         start_monitoring(slot);
         
-        // Start relay immediately after part is in bin
+        // Start relay immediately - machine can run while monitoring
         relay_output(true);
         
         Serial.println("[RELAY] Machine restarted - part confirmed in rejection bin");
+        Serial.println("[READY] Press AUTO to count part and continue, or REJECT for another part\n");
     }
 }
 

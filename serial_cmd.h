@@ -14,13 +14,18 @@ void printHelp()
     
     // LIST command - displays all files stored in SPIFFS
     Serial.println(" LIST");
-    Serial.println("   - Print all stored file with data");
+    Serial.println("   - Print all stored files with data");
     Serial.println();
     
     // READ command - displays content of a specific file
     Serial.println(" READ <path>");
     Serial.println("   - Print data of a specific file");
-    Serial.println("   - Example: READ /total_count.txt");
+    Serial.println("   - Example: READ /start_1.txt");
+    Serial.println();
+    
+    // RST command - restart ESP32
+    Serial.println(" RST");
+    Serial.println("   - Restart ESP32");
     Serial.println();
     
     // HELP command - shows this help menu
@@ -31,15 +36,20 @@ void printHelp()
     // Web server connection information
     Serial.println(" Web Server : ");
     Serial.println(" - Connect to the Wifi ");
-    Serial.println(" - SSID - RejectionBin_AP PASS - rejection ");
+    Serial.println(" - SSID - RejectionBin_AP PASS - rejectionbin");
     Serial.println(" - Open 192.168.1.21 on Browser");
     
-    // Description of stored files and their purposes
-    Serial.println("Files:");
-    Serial.println(" /boot_number.txt   - total power cycles");        // Tracks how many times system has booted
-    Serial.println(" /total_count.txt   - lifetime reject count");     // Total number of rejections across all sessions
-    Serial.println(" /state.txt         - machine mode");              // Current machine mode (AUTO/REJECT)
-    Serial.println(" /start_X.txt       - session data (X = 1 to 100)"); // Individual session logs
+    // Description of stored data and their locations
+    Serial.println();
+    Serial.println("Data Storage:");
+    Serial.println(" EEPROM (Fast, Power-Safe):");
+    Serial.println("   - machine_mode      - AUTO/REJECT state");
+    Serial.println("   - lifetime_count    - total rejects (never resets)");
+    Serial.println("   - boot_number       - power cycles");
+    Serial.println();
+    Serial.println(" SPIFFS (Session History):");
+    Serial.println("   - /version.txt      - firmware version");
+    Serial.println("   - /start_X.txt      - session logs (X = 1 to 100)");
     Serial.println("------------------------------------------");
 }
 
@@ -81,11 +91,16 @@ void listAllFiles()
     Serial.println();
     Serial.println("------------ Listing All Files --------------");
     
-    // Display core system files first
-    readFile("/boot_number.txt");   // Boot counter
-    readFile("/total_count.txt");   // Lifetime rejection count
-    readFile("/state.txt");         // Machine state/mode
-
+    // Display EEPROM data first
+    Serial.println("[EEPROM Data]");
+    Serial.printf("  Boot Number:      %lu\n", current_boot_number);
+    Serial.printf("  Lifetime Count:   %lu\n", total_lifetime_count);
+    Serial.printf("  Machine Mode:     %s\n", state.machine_mode ? "REJECT" : "AUTO");
+    Serial.println();
+    
+    // Display SPIFFS files
+    Serial.println("[SPIFFS Files]");
+    readFile("/version.txt");   // Firmware version
 
     // Loop through all possible session files (1 to 100)
     char path[20];  // Buffer to hold file path string
@@ -135,9 +150,9 @@ void handleSerialCommands()
         path.toLowerCase();    // File paths are case-sensitive, use lowercase
         readFile(path);        // Read and display the file
     }
-    else if(cmd == "rst")
+    // Process RST command - restart ESP32
+    else if(cmd == "RST")
     {
-        
         Serial.println("Restarting ESP in 3 seconds....");
         delay(3000); 
         ESP.restart();

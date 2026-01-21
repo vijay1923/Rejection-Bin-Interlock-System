@@ -5,31 +5,6 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-// Function to verify filesystem integrity (detects corruption from power loss)
-// Returns true if filesystem is healthy, false if corrupted
-
-// bool verify_filesystem_integrity() 
-// {
-//     // Test 1: Can we create a test file?
-//     File test = SPIFFS.open("/test_integrity.txt", "w");
-//     if (!test) return false;
-//     test.println("test");
-//     test.close();
-    
-//     // Test 2: Can we read it back?
-//     test = SPIFFS.open("/test_integrity.txt", "r");
-//     if (!test) return false;
-//     String content = test.readStringUntil('\n');
-//     test.close();
-    
-//     // Test 3: Does content match?
-//     if (content != "test") return false;
-    
-//     // Cleanup test file
-//     SPIFFS.remove("/test_integrity.txt");
-//     return true;
-// }
-
 // Function to check if SPIFFS version matches firmware version
 // Auto-reformats when firmware is updated with new file structure
 bool check_spiffs_version() 
@@ -82,9 +57,9 @@ bool check_spiffs_version()
 // Function to initialize and mount the SPIFFS file system
 void init_filesystem() 
 {
-    Serial.println("FILE INIT ");
+    Serial.println("----------------------SPIFFS INIT-----------------");
     
-    // Try to mount SPIFFS with auto-format enabled (handles empty/unformatted flash)
+    // Try to mount SPIFFS with auto-format enabled
     if (!SPIFFS.begin(true)) 
     {
         Serial.println("SPIFFS Mount failed!");
@@ -93,17 +68,8 @@ void init_filesystem()
     
     Serial.println("SPIFFS Mounted successfully");
     
-    // Verify filesystem integrity (detects corruption from power loss)
-    // if (!verify_filesystem_integrity()) 
-    // {
-    //     Serial.println("Corruption detected! Reformatting...");
-    //     SPIFFS.end();
-    //     SPIFFS.format();
-    //     SPIFFS.begin(false);
-    // }
-    
-    // Check version compatibility (handles firmware updates with file structure changes)
-  //  check_spiffs_version();
+    // Check version compatibility
+    check_spiffs_version();
     
     // Print filesystem info
     size_t total = SPIFFS.totalBytes();
@@ -115,39 +81,16 @@ void init_filesystem()
     double freeMB  = free  / (1024.0 * 1024.0);
     
     Serial.printf("Total: %.2f MB | Used: %.2f MB | Free: %.2f MB\n", totalMB, usedMB, freeMB);
+    Serial.println("------------------------------------------");
 }
 
-// boot number manager 
-void init_boot_number() 
+// Create new session file for current boot
+void create_session_file() 
 {
-    File file = SPIFFS.open("/boot_number.txt", "r");
-    
-    if (!file) 
-    {
-        // First boot ever - create file
-        current_boot_number = 1;
-        Serial.println("First boot - initializing boot counter");
-    } 
-    else 
-    {
-        String line = file.readStringUntil('\n');
-        file.close();
-        current_boot_number = line.toInt() + 1;  // Increment boot number
-    }
-    
-    // Save updated boot number
-    file = SPIFFS.open("/boot_number.txt", "w");
-    if (file) 
-    {
-        file.println(current_boot_number);
-        file.close();
-        Serial.printf("[BOOT] Boot Number: %lu\n", current_boot_number);
-    }
-    
-    // batch manager - max 100 boot files 
+    // Batch manager - delete old files if we exceed MAX_START_FILES
     if (current_boot_number > MAX_START_FILES && (current_boot_number - 1) % MAX_START_FILES == 0) 
     {
-        Serial.println("BATCH DELETE: Removing old session files");
+        Serial.println("[SPIFFS] BATCH DELETE: Removing old session files");
         
         uint32_t start_delete = current_boot_number - MAX_START_FILES;
         uint32_t end_delete = current_boot_number - 1;
@@ -165,84 +108,24 @@ void init_boot_number()
         Serial.printf("Deleted files from start_%lu to start_%lu\n", start_delete, end_delete);
     }
     
-    // new session file 
+    // Create new session file for this boot
     String session_file = "/start_" + String(current_boot_number) + ".txt";
-    file = SPIFFS.open(session_file, "w");
+    File file = SPIFFS.open(session_file, "w");
     if (file) 
     {
         file.println(0);  // Initialize with 0 rejects
         file.close();
-        Serial.printf("[SESSION] Created: %s\n", session_file.c_str());
+        Serial.printf("[SPIFFS] Created session file: %s\n", session_file.c_str());
     }
     
-    current_session_count = 0;  // Reset session counter
+    // Reset session counter
+    current_session_count = 0;
 }
 
-// total reject count 
-void init_total_count() 
+// Save reject count to current session file
+void save_session_reject_count() 
 {
-    File file = SPIFFS.open("/total_count.txt", "r");
-    
-    if (!file) 
-    {
-        // First time - create file
-        total_lifetime_count = 0;
-        Serial.println("No total count file - starting from 0");
-        
-        file = SPIFFS.open("/total_count.txt", "w");
-        if (file) 
-        {
-            file.println(0);
-            file.close();
-        }
-    } 
-    else 
-    {
-        String line = file.readStringUntil('\n');
-        file.close();
-        total_lifetime_count = line.toInt();
-        Serial.printf("Lifetime Count: %lu\n", total_lifetime_count);
-    }
-}
-
-// machine state 
-void write_state() 
-{
-    File file = SPIFFS.open("/state.txt", "w");
-    if (!file) 
-    {
-        Serial.println("Failed to write");
-        return;
-    }
-    
-    file.println(state.machine_mode ? 1 : 0);  // machine mode 
-    file.close();
-}
-
-void read_state() 
-{
-    File file = SPIFFS.open("/state.txt", "r");
-    
-    if (!file) 
-    {
-        // File doesn't exist - use default
-        state.machine_mode = false;
-        Serial.println("[STATE] No state file - using default (AUTO mode)");
-        write_state();
-        return;
-    }
-    
-    String line = file.readStringUntil('\n');
-    file.close();
-    
-    state.machine_mode = (line.toInt() == 1);
-    Serial.printf("[STATE] Machine Mode: %s\n", state.machine_mode ? "REJECT" : "AUTO");
-}
-
-// reject count - Both Session & Total
-void save_reject_count() 
-{
-    // Update session count
+    // Increment session count
     current_session_count++;
     
     // Save to current session file
@@ -254,19 +137,7 @@ void save_reject_count()
         file.close();
     }
     
-    // Update total count
-    total_lifetime_count++;
-    
-    // Save to total count file
-    file = SPIFFS.open("/total_count.txt", "w");
-    if (file) 
-    {
-        file.println(total_lifetime_count);
-        file.close();
-    }
-    
-    // Update state.reject_count for display purposes
-    state.reject_count = total_lifetime_count;
+    Serial.printf("[SPIFFS] Session count updated: %lu\n", current_session_count);
 }
 
 #endif

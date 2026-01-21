@@ -27,59 +27,67 @@ void process_inputs(uint8_t edge)
 // Handler for AUTO button press - starts/resumes machine operation
 void auto_button_handler() 
 {
-    // Prevent AUTO mode activation if system is still in REJECT mode
-    // Operator must confirm part in bin before resuming
+    // If monitoring is active, count the part before switching to AUTO
+    if (monitoring_active && !part_counted)
+    {
+        Serial.println("\n[AUTO] Button pressed - Counting monitored part...");
+        increment_part_count();
+    }
+    
+    // If still in REJECT mode, ignore AUTO button
     if (state.machine_mode) 
     {
-        Serial.println("AUTO ignored - still in REJECT mode");
+        Serial.println("[AUTO] Ignored - still in REJECT mode (waiting for part)");
         return;
     }
     
-    Serial.println("AUTO MODE - MACHINE RUNNING");
+    Serial.println("\n[AUTO] AUTO MODE - Starting new production cycle");
     
-    // Clear monitoring from previous cycle - start fresh
-    monitoring_active = false;
-    part_count_incremented = false;
-    monitoring_last_sensor = 0;
-    monitored_slot = 0;
+    // Clear monitoring - new cycle begins
+    stop_monitoring();
     
     // Set machine to AUTO mode (normal operation)
     state.machine_mode = false;
     active_slot = 0;  // Clear any active slot tracking
     
-    // Save machine mode to persistent storage
-    write_state();
+    // Save machine mode to EEPROM
+    eeprom_write_machine_mode();
     
     // Turn on machine relay (start production)
     relay_output(true);
+    
+    Serial.println("[READY] Machine running - Ready for next reject\n");
 }
 
 // Handler for REJECT button press - stops machine and enters rejection mode
 void reject_button_handler() 
 {
+    // If monitoring is active, count the part before new reject
+    if (monitoring_active && !part_counted)
+    {
+        Serial.println("\n[REJECT] Button pressed - Counting previous part...");
+        increment_part_count();
+    }
+    
     // Only allow REJECT mode if machine is currently running
-    // Prevents rejecting parts when machine is already stopped
     if (!machine_status) 
     {
-        Serial.println("[BUTTON] REJECT ignored - machine not running");
+        Serial.println("[REJECT] Ignored - machine not running");
         return;
     }
     
-    Serial.println("REJECT MODE - MACHINE STOPPED");
-    Serial.println("Waiting for part in rejection bin...");
+    Serial.println("\n[REJECT] REJECT MODE - Machine stopped");
+    Serial.println("[WAITING] Place rejected part in bin...\n");
     
-    // Clear monitoring from previous cycle - reset for new part
-    monitoring_active = false;
-    part_count_incremented = false;
-    monitoring_last_sensor = 0;
-    monitored_slot = 0;
+    // Clear monitoring for new part
+    stop_monitoring();
     
     // Set machine to REJECT mode (waiting for part confirmation)
     state.machine_mode = true;
     active_slot = 0;  // Reset slot tracking for new sequence
     
-    // Save machine mode to persistent storage
-    write_state();
+    // Save machine mode to EEPROM
+    eeprom_write_machine_mode();
     
     // Turn off machine relay (stop production)
     relay_output(false);

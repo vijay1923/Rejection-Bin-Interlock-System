@@ -1,7 +1,8 @@
 // Include necessary libraries and custom header files
 #include <Wire.h>                    // I2C communication library for PCF8574 modules
 #include "config.h"                  // Configuration settings and constants
-#include "file_operations.h"         // File system operations for data persistence
+#include "eeprom_operations.h"       // EEPROM operations for critical data
+#include "file_operations.h"         // SPIFFS operations for session logs
 #include "io_operations.h"           // Input/Output operations for PCF8574
 #include "process.h"                 // Main processing logic for rejection system
 #include "reject.h"                  // Rejection handling logic
@@ -13,63 +14,64 @@ void setup()
     // Initialize serial communication at 115200 baud rate
     Serial.begin(115200);
     delay(2000);   // Wait for serial port to stabilize
-    Serial.println("WELCOME ESP32 : REJECTION BIN INTERLOCKING SYSTEM");
+    Serial.println("WELCOME ESP32 : REJECTION BIN INTERLOCKING SYSTEM ");
     
     // Initialize I2C communication with SDA on GPIO21 and SCL on GPIO22
     Wire.begin(21, 22);
     Wire.setClock(100000);  // Set I2C clock to 100kHz for stable communication
     
     // Configure PCF1 (first PCF8574 module) as inputs with internal pullups enabled
-    // Writing 0xFF sets all pins HIGH, enabling pullup resistors for input mode
     Wire.beginTransmission(PCF1_ADDR);
     Wire.write(0xFF);  // set all pins HIGH for input with pullups
     Wire.endTransmission();
     
     // Configure PCF2 (second PCF8574 module) as outputs, all set LOW initially
-    // Writing 0x00 turns all relays OFF at startup for safety
     Wire.beginTransmission(PCF2_ADDR);
     Wire.write(0x00);   // set all outputs low 
     Wire.endTransmission();
 
     // Initialize system components
     initWebServer();          // Start the web server for remote access
-    init_filesystem();        // Mount file system (SPIFFS/LittleFS)
-    init_boot_number();       // Load/increment boot counter
-    init_total_count();       // Load lifetime rejection count from storage
+    init_filesystem();        // Mount SPIFFS for session logs
     
-    // Load saved system state from file system
-    read_state();
+    // Initialize EEPROM and load critical data
+    init_eeprom();                      // Initialize EEPROM
+    eeprom_read_and_increment_boot();   // Read and increment boot number
+    eeprom_read_lifetime_count();       // Load lifetime reject count
+    eeprom_read_machine_mode();         // Load machine mode (AUTO/REJECT)
+    
+    // Create new session file in SPIFFS
+    create_session_file();
     
     // Display current system status on serial monitor
-    Serial.println("-------------SYSTEM STATUS -------------");
-    Serial.printf("Boot Number:          %lu\n", current_boot_number);
-    Serial.printf("Session Count:        %lu\n", current_session_count);
-    Serial.printf("Lifetime rejection:   %lu\n", total_lifetime_count);
-    Serial.printf("Machine Mode:         %s\n", state.machine_mode ? "REJECT" : "AUTO");
-    Serial.println("----------------------------------------");
+    Serial.println("---------------------STATUS----------------------");
+    Serial.printf("Boot Number:        %-24lu\n", current_boot_number);
+    Serial.printf("Session Count:      %-24lu\n", current_session_count);
+    Serial.printf("Lifetime Rejects:   %-24lu\n", total_lifetime_count);
+    Serial.printf("Machine Mode:       %-24s\n", state.machine_mode ? "REJECT" : "AUTO");
+    Serial.println("--------------------------------------------------");
     
     // Initialize machine status and outputs
-    machine_status =true;   // Start with machine relay ON
+    machine_status = true;   // Start with machine relay ON
     relay_output(machine_status); 
     
     // Check machine mode and display appropriate startup message
     if (state.machine_mode) 
     {
         // System is in REJECT mode - waiting for operator intervention
-        Serial.println("SYSTEM IN REJECT MODE");
+        Serial.println(" SYSTEM IN REJECT MODE");
         Serial.println("Waiting for part confirmation in bin...");
-        Serial.println("Buzzer/LED Alert ACTIVE");
+        Serial.println("Place part to continue\n");
     } 
     else 
     {
         // System is in AUTO mode - ready for normal operation
-        Serial.println("SYSTEM READY");
-        Serial.println("Press AUTO button to start machine");
+        Serial.println(" SYSTEM READY");
+        Serial.println("Press AUTO button to start production");
     }
     
     // Store initial input state to detect changes (edge detection)
     prev_inputs = read_inputs();
-
 }
 
 void loop() 
@@ -88,11 +90,10 @@ void loop()
         // Read current state of all input pins from PCF1
         uint8_t current_inputs = read_inputs();
         
-        //  check monitoring for cheat detection
+        // CONTINUOUS monitoring - runs every cycle, checks for B→A at all times
         check_monitoring(current_inputs);
         
         // Detect rising edge transitions (button press / sensor trigger)
-        // Edge = current HIGH AND previous LOW (bitwise: current & NOT previous)
         uint8_t edge = current_inputs & ~prev_inputs;
         
         // If any input has transitioned from LOW to HIGH, process it

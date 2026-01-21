@@ -18,27 +18,36 @@
 #define SLOT3_B         0       // Slot 3 Sensor B (back)
 
 #define RELAY_AUTO      0       // AUTO relay to PLC
-#define LED_MACHINE_ON  1       // GREEN LED - Machine running indicator (renamed from LED_REJECT)
+#define LED_MACHINE_ON  1       // GREEN LED - Machine running indicator
 #define BUZZER_LED      2       // RED LED + Buzzer for reject alert and sensor beeps
+
+
+// EEPROM Memory Map
+#define EEPROM_SIZE           512     // Total EEPROM size to allocate
+#define EEPROM_MAGIC          0xABCD  // Magic number to detect first boot
+#define ADDR_MAGIC            0       // Address 0-1: Magic number (2 bytes)
+#define ADDR_MACHINE_MODE     2       // Address 2: Machine mode (1 byte)
+#define ADDR_LIFETIME_COUNT   3       // Address 3-6: Lifetime count (4 bytes)
+#define ADDR_BOOT_NUMBER      7       // Address 7-10: Boot number (4 bytes)
+
 
 // Beep duration constant
 #define BEEP_DURATION   500     // All beeps are 500ms
 
-
 // struct to hold machine state and counts
 struct MachineState
 {
-    uint32_t reject_count;      // Total rejected parts (current session only)
-    bool machine_mode;          // true if waiting for part in bin
+    uint32_t reject_count;      // Total rejected parts (for display)
+    bool machine_mode;          // true = REJECT mode, false = AUTO mode
 };
 
 uint8_t prev_inputs = 0x00;         // Previous normalized input state
-uint8_t active_slot = 0;            // Local slot tracking not saved
+uint8_t active_slot = 0;            // Currently active slot (1, 2, or 3)
 MachineState state;                 // Current machine state
 bool machine_status = false;        // true when AUTO relay is ON
 uint32_t last_poll_time = 0;        // For polling timing
 
-// Beep timing variables (replaces old buzzer blink variables)
+// Beep timing variables
 bool beep_active = false;           // Is a beep currently playing?
 unsigned long beep_start_time = 0;  // When did the beep start?
 
@@ -47,21 +56,21 @@ uint32_t current_boot_number = 0;   // Current boot/restart number
 uint32_t current_session_count = 0; // Reject count for current boot session
 uint32_t total_lifetime_count = 0;  // Total rejects across all boots
 
-// Monitoring state variables
-bool monitoring_active = false;
-unsigned long monitoring_start_time = 0;
-uint8_t monitored_slot = 0;
-bool part_count_incremented = false;  // Track if count was already incremented for this part
-uint8_t monitoring_last_sensor = 0;   // Track last sensor triggered: 1=SensorA, 2=SensorB (for B→A detection)
+// Continuous monitoring state variables
+bool monitoring_active = false;     // Is continuous monitoring active?
+uint8_t monitored_slot = 0;         // Which slot is being monitored (1, 2, or 3)
+uint8_t monitoring_last_sensor = 0; // Last sensor triggered: 1=SensorA, 2=SensorB
+bool part_counted = false;          // Has this part been counted yet?
 
-#define MONITORING_DURATION 5000  // 5 seconds monitoring time after A→B
-
-// SPIFFS version tracking - increment when file structure changes in firmware updates
+// SPIFFS version tracking
 #define SPIFFS_VERSION 1
 
+// Forward declarations
 void auto_button_handler();
 void reject_button_handler();
 void reject_handler(uint8_t edge);
 void process_inputs(uint8_t edge);
+void increment_part_count();
+void stop_monitoring();
 
 #endif
