@@ -177,7 +177,7 @@ void reject_handler(uint8_t edge)
     // Check if Slot 2's second sensor (2B) was triggered after 2A
     else if (active_slot == 2 && (edge & (1 << SLOT2_B))) 
     {
-        valid_sequence = true;   
+        valid_sequence = true;     // Valid A→B sequence
         Serial.println("[SENSOR] Slot 2B detected - A→B sequence complete!");
         trigger_beep();  // Beep when Sensor B triggers
     }
