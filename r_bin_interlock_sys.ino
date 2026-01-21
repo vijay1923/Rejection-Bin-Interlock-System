@@ -53,7 +53,7 @@ void setup()
     
     // Initialize machine status and outputs
     machine_status = true;   // Start with machine relay ON
-    relay_output(machine_status); 
+    relay_output(machine_status);   // Update outputs accordingly
     
     // Check machine mode and display appropriate startup message
     if (state.machine_mode) 
