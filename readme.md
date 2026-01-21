@@ -1,5 +1,5 @@
 # 🏭 Rejection Bin Interlocking System
-## ESP32-Based Industrial Part Rejection Control with Multi-Boot Session Tracking
+## ESP32-Based Industrial Part Rejection control and Rejection count Logging system
 
 ---
 
