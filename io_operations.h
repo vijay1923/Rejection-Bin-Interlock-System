@@ -24,7 +24,7 @@ void write_outputs(uint8_t data)
     Wire.endTransmission();              // End transmission and apply changes
 }
 
-// Function to trigger a 500ms beep (non-blocking)
+// Function to trigger a 500ms beep for alerts
 void trigger_beep()
 {
     beep_active = true;
@@ -51,9 +51,9 @@ void update_outputs()
     //  BUZZER  
     if (beep_active)
     {
-        unsigned long elapsed = millis() - beep_start_time;
+        unsigned long elapsed = millis() - beep_start_time;  // Calculate elapsed time since beep started
         
-        if (elapsed < BEEP_DURATION)
+        if (elapsed < BEEP_DURATION)  // Beep duration not yet completed
         {
             out |= (1 << BUZZER_LED);  // Beep ON
         }
