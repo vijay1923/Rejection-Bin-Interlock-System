@@ -22,7 +22,7 @@
 #define BUZZER_LED      2       // RED LED + Buzzer for reject alert and sensor beeps
 
 
-// EEPROM Memory Map
+// EEPROM memory definitions
 #define EEPROM_SIZE           512     // Total EEPROM size to allocate
 #define EEPROM_MAGIC          0xABCD  // Magic number to detect first boot
 #define ADDR_MAGIC            0       // Address 0-1: Magic number (2 bytes)
