@@ -7,7 +7,7 @@
 // Initialize EEPROM and check if it's first boot
 void init_eeprom() 
 {
-    Serial.println("---------EEPROM INIT---------");
+    Serial.println("--------------EEPROM INIT-------------");
     
     // Initialize EEPROM with defined size
     EEPROM.begin(EEPROM_SIZE);
