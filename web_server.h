@@ -8,8 +8,8 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define AP_SSID "RejectionBin_AP"
-#define AP_PASSWORD "rejectionbin"
+#define AP_SSID "RejectionBin_AP"   // Wifi AP SSID
+#define AP_PASSWORD "rejectionbin"  // Wifi AP Password
 #define AP_IP IPAddress(192, 168, 1, 21)
 #define AP_GATEWAY IPAddress(192, 168, 1, 21)
 #define AP_SUBNET IPAddress(255, 255, 255, 0)
