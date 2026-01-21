@@ -1,7 +1,6 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-// Forward declarations of handler functions
 void auto_button_handler();
 void reject_button_handler();
 
