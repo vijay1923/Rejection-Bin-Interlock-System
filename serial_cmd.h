@@ -151,11 +151,11 @@ void handleSerialCommands()
         readFile(path);        // Read and display the file
     }
     // Process RST command - restart ESP32
-    else if(cmd == "RST")
+    else if(cmd == "RST")   // implement restart command
     {
         Serial.println("Restarting ESP in 3 seconds....");
         delay(3000); 
-        ESP.restart();
+        ESP.restart();   
     }
     // Handle unknown commands
     else if (cmd.length() > 0)
