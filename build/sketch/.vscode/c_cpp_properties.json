@@ -6,9 +6,21 @@
       "includePath": [
         "C:\\Users\\Shree\\Documents\\Arduino\\libraries\\libraries/**",
         "C:\\Users\\Shree\\Documents\\Arduino\\Embedsol\\r_bin_interlock_sys/**",
-        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32\\include/**"
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32\\include/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32-arduino-libs\\idf-release_v5.5-9bb7aa84-v2\\esp32\\qio_qspi\\include/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\variants\\esp32/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Wire\\src/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\FS\\src/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\SPIFFS\\src/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\WiFi\\src/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Network\\src/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\WebServer\\src/**",
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\libraries\\Hash\\src/**"
       ],
-      "forcedInclude": [],
+      "forcedInclude": [
+        "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.5\\cores\\esp32\\Arduino.h"
+      ],
       "compilerPath": "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
       "compilerArgs": [
         "C:\\Users\\Shree\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2511/bin/xtensa-esp32-elf-g++",
@@ -26,7 +38,7 @@
         "-DARDUINO_VARIANT=\"esp32\"",
         "-DARDUINO_PARTITION_default",
         "-DARDUINO_HOST_OS=\"windows\"",
-        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=all,JTAGAdapter=default,ZigbeeMode=default\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
         "-DESP32=ESP32",
         "-DCORE_DEBUG_LEVEL=0",
         "-DARDUINO_RUNNING_CORE=1",
@@ -62,7 +74,7 @@
         "ARDUINO_VARIANT=\"esp32\"",
         "ARDUINO_PARTITION_default",
         "ARDUINO_HOST_OS=\"windows\"",
-        "ARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=all,JTAGAdapter=default,ZigbeeMode=default\"",
+        "ARDUINO_FQBN=\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\"",
         "ESP32=ESP32",
         "CORE_DEBUG_LEVEL=0",
         "ARDUINO_RUNNING_CORE=1",
@@ -71,7 +83,7 @@
         "ARDUINO_BOARD=\\\"ESP32_DEV\\\"\"",
         "ARDUINO_VARIANT=\\\"esp32\\\"\"",
         "ARDUINO_HOST_OS=\\\"windows\\\"\"",
-        "ARDUINO_FQBN=\\\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=all,JTAGAdapter=default,ZigbeeMode=default\\\"\"",
+        "ARDUINO_FQBN=\\\"esp32:esp32:esp32:UploadSpeed=921600,CPUFreq=240,FlashFreq=80,FlashMode=qio,FlashSize=4M,PartitionScheme=default,DebugLevel=none,PSRAM=disabled,LoopCore=1,EventsCore=1,EraseFlash=none,JTAGAdapter=default,ZigbeeMode=default\\\"\"",
         "ARDUINO_CORE_BUILD",
         "USBCON"
       ],

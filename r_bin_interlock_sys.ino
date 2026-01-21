@@ -22,13 +22,13 @@ void setup()
     // Configure PCF1 (first PCF8574 module) as inputs with internal pullups enabled
     // Writing 0xFF sets all pins HIGH, enabling pullup resistors for input mode
     Wire.beginTransmission(PCF1_ADDR);
-    Wire.write(0xFF);
+    Wire.write(0xFF);  // set all pins HIGH for input with pullups
     Wire.endTransmission();
     
     // Configure PCF2 (second PCF8574 module) as outputs, all set LOW initially
     // Writing 0x00 turns all relays OFF at startup for safety
     Wire.beginTransmission(PCF2_ADDR);
-    Wire.write(0x00);
+    Wire.write(0x00);   // set all outputs low 
     Wire.endTransmission();
 
     // Initialize system components
@@ -48,9 +48,9 @@ void setup()
     Serial.printf("Machine Mode:         %s\n", state.machine_mode ? "REJECT" : "AUTO");
     Serial.println("----------------------------------------");
     
-    // Initialize machine status and ensure all relays are off
-    machine_status = false;
-    relay_output(false);  // Safety: Turn off all relay outputs
+    // Initialize machine status and outputs
+    machine_status =true;   // Start with machine relay ON
+    relay_output(machine_status); 
     
     // Check machine mode and display appropriate startup message
     if (state.machine_mode) 
@@ -69,6 +69,7 @@ void setup()
     
     // Store initial input state to detect changes (edge detection)
     prev_inputs = read_inputs();
+
 }
 
 void loop() 
@@ -86,6 +87,9 @@ void loop()
         
         // Read current state of all input pins from PCF1
         uint8_t current_inputs = read_inputs();
+        
+        //  check monitoring for cheat detection
+        check_monitoring(current_inputs);
         
         // Detect rising edge transitions (button press / sensor trigger)
         // Edge = current HIGH AND previous LOW (bitwise: current & NOT previous)

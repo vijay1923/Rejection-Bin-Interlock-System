@@ -37,6 +37,12 @@ void auto_button_handler()
     
     Serial.println("AUTO MODE - MACHINE RUNNING");
     
+    // Clear monitoring from previous cycle - start fresh
+    monitoring_active = false;
+    part_count_incremented = false;
+    monitoring_last_sensor = 0;
+    monitored_slot = 0;
+    
     // Set machine to AUTO mode (normal operation)
     state.machine_mode = false;
     active_slot = 0;  // Clear any active slot tracking
@@ -62,6 +68,12 @@ void reject_button_handler()
     Serial.println("REJECT MODE - MACHINE STOPPED");
     Serial.println("Waiting for part in rejection bin...");
     
+    // Clear monitoring from previous cycle - reset for new part
+    monitoring_active = false;
+    part_count_incremented = false;
+    monitoring_last_sensor = 0;
+    monitored_slot = 0;
+    
     // Set machine to REJECT mode (waiting for part confirmation)
     state.machine_mode = true;
     active_slot = 0;  // Reset slot tracking for new sequence
@@ -71,6 +83,9 @@ void reject_button_handler()
     
     // Turn off machine relay (stop production)
     relay_output(false);
+    
+    // Trigger 500ms beep when REJECT button pressed
+    trigger_beep();
 }
 
 #endif

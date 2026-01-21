@@ -8,27 +8,28 @@
 
 // Function to verify filesystem integrity (detects corruption from power loss)
 // Returns true if filesystem is healthy, false if corrupted
-bool verify_filesystem_integrity() 
-{
-    // Test 1: Can we create a test file?
-    File test = SPIFFS.open("/test_integrity.txt", "w");
-    if (!test) return false;
-    test.println("test");
-    test.close();
+
+// bool verify_filesystem_integrity() 
+// {
+//     // Test 1: Can we create a test file?
+//     File test = SPIFFS.open("/test_integrity.txt", "w");
+//     if (!test) return false;
+//     test.println("test");
+//     test.close();
     
-    // Test 2: Can we read it back?
-    test = SPIFFS.open("/test_integrity.txt", "r");
-    if (!test) return false;
-    String content = test.readStringUntil('\n');
-    test.close();
+//     // Test 2: Can we read it back?
+//     test = SPIFFS.open("/test_integrity.txt", "r");
+//     if (!test) return false;
+//     String content = test.readStringUntil('\n');
+//     test.close();
     
-    // Test 3: Does content match?
-    if (content != "test") return false;
+//     // Test 3: Does content match?
+//     if (content != "test") return false;
     
-    // Cleanup test file
-    SPIFFS.remove("/test_integrity.txt");
-    return true;
-}
+//     // Cleanup test file
+//     SPIFFS.remove("/test_integrity.txt");
+//     return true;
+// }
 
 // Function to check if SPIFFS version matches firmware version
 // Auto-reformats when firmware is updated with new file structure

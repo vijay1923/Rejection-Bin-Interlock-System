@@ -15,7 +15,7 @@ void printHelp()
     
     // LIST command - displays all files stored in SPIFFS
     Serial.println(" LIST");
-    Serial.println("   - Print all stored file data");
+    Serial.println("   - Print all stored file with data");
     Serial.println();
     
     // READ command - displays content of a specific file
@@ -135,6 +135,13 @@ void handleSerialCommands()
         path.trim();           // Remove extra spaces
         path.toLowerCase();    // File paths are case-sensitive, use lowercase
         readFile(path);        // Read and display the file
+    }
+    else if(cmd == "rst")
+    {
+        
+        Serial.println("Restarting ESP in 3 seconds....");
+        delay(3000); 
+        ESP.restart();
     }
     // Handle unknown commands
     else if (cmd.length() > 0)

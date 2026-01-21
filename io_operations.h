@@ -12,7 +12,6 @@ uint8_t read_inputs()
     {
         uint8_t raw = Wire.read();  // Read raw input byte
         return ~raw;  // Invert bits (PCF8574 inputs are active LOW, we want active HIGH)
-                     // Example: Button pressed = 0 on PCF → inverted to 1 for easier logic
     }
     return 0x00;  // Return all LOW if read fails
 }
@@ -25,42 +24,43 @@ void write_outputs(uint8_t data)
     Wire.endTransmission();              // End transmission and apply changes
 }
 
+// Function to trigger a 500ms beep (non-blocking)
+void trigger_beep()
+{
+    beep_active = true;
+    beep_start_time = millis();
+}
+
 // Function to update all outputs based on current system state
 void update_outputs()
 {
-    uint8_t out = 0x00;  // Start with all outputs OFF (0x00 = all bits LOW)
+    uint8_t out = 0x00;  // Start with all outputs OFF
     
-    // Set AUTO relay bit if machine is running
+    // RELAY: Machine Control ============
     if (machine_status) 
     {
         out |= (1 << RELAY_AUTO);  // Turn on machine relay
     }
     
-    // Set REJECT LED bit if system is in reject mode
-    if (state.machine_mode) 
+    //  GREEN LED 
+    if (machine_status) 
     {
-        out |= (1 << LED_REJECT);  // Turn on reject indicator LED
+        out |= (1 << LED_MACHINE_ON);  // Turn on GREEN LED when machine running
     }
     
-    // Blink buzzer/LED in reject mode to alert operator
-    if (state.machine_mode) 
+    //  BUZZER  
+    if (beep_active)
     {
-        // Toggle buzzer state at regular intervals (defined by BUZZER_INTERVAL)
-        if (millis() - last_buzzer_toggle >= BUZZER_INTERVAL)
-        {
-            last_buzzer_toggle = millis();   // Update last toggle time
-            buzzer_state = !buzzer_state;    // Flip buzzer state (ON/OFF)
-        }
+        unsigned long elapsed = millis() - beep_start_time;
         
-        // Set buzzer/LED bit if currently in ON state
-        if (buzzer_state)
+        if (elapsed < BEEP_DURATION)
         {
-            out |= (1 << BUZZER_LED);  // Turn on buzzer/LED
+            out |= (1 << BUZZER_LED);  // Beep ON
         }
-    }
-    else
-    {
-        buzzer_state = false;  // Ensure buzzer is off when not in reject mode
+        else
+        {
+            beep_active = false;  // Beep complete
+        }
     }
     
     // Write the constructed output byte to PCF2
@@ -72,32 +72,6 @@ void relay_output(bool on)
 {
     machine_status = on;  // Update global machine status flag
     update_outputs();     // Apply changes to all outputs
-}
-
-// Function to send a timed pulse on a specific output pin
-// Used for sending confirmation signals to PLC/machine
-void pulse_output(uint8_t pin, uint16_t duration_ms) 
-{
-    uint8_t out = 0x00;  // Start with all outputs OFF
-    
-    // Preserve current AUTO relay state
-    if (machine_status) out |= (1 << RELAY_AUTO);
-    
-    // Preserve current REJECT mode indicators
-    if (state.machine_mode) 
-    {
-        out |= (1 << LED_REJECT);              // Keep reject LED on
-        if (buzzer_state) out |= (1 << BUZZER_LED);  // Keep buzzer state
-    }
-    
-    // Turn ON the specified pin for the pulse
-    out |= (1 << pin);
-    write_outputs(out);     // Apply pulse start
-    delay(duration_ms);     // Hold pulse for specified duration
-    
-    // Turn OFF the specified pin to end the pulse
-    out &= ~(1 << pin);     // Clear the pin bit (bitwise AND with inverted mask)
-    write_outputs(out);     // Apply pulse end
 }
 
 #endif

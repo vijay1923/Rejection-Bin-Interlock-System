@@ -135,6 +135,13 @@ void handleSerialCommands()
         path.toLowerCase();    // File paths are case-sensitive, use lowercase
         readFile(path);        // Read and display the file
     }
+    else if(cmd == "rst")
+    {
+        
+        Serial.println("Restarting ESP in 3 seconds....");
+        delay(3000); 
+        ESP.restart();
+    }
     // Handle unknown commands
     else if (cmd.length() > 0)
     {

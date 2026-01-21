@@ -49,12 +49,14 @@ h2{font-size:15px;margin:0 0 8px 0;color:#333;border-bottom:2px solid #4CAF50;pa
 </head><body>)rawliteral";
 }
 
-String htmlFooter() {
+String htmlFooter() 
+{
     return "</body></html>";
 }
 
 // Dashboard - optimized for speed
-void handleRoot() {
+void handleRoot() 
+{
     String html = htmlHeader();
     
     html += "<div class='card'><h1>🏭 REJECTION BIN SYSTEM</h1></div>";
