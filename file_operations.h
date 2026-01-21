@@ -17,15 +17,15 @@ bool check_spiffs_version()
         file = SPIFFS.open("/version.txt", "w");
         if (file) 
         {
-            file.println(SPIFFS_VERSION);
+            file.println(SPIFFS_VERSION);  // Write current version
             file.close();
         }
         return true;
     }
     
     // Read stored version number
-    int stored_version = file.readStringUntil('\n').toInt();
-    file.close();
+    int stored_version = file.readStringUntil('\n').toInt();  // Read version as integer
+    file.close();  
     
     // Check if stored version matches firmware's expected version
     if (stored_version != SPIFFS_VERSION) 
