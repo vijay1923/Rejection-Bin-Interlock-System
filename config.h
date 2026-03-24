@@ -8,6 +8,8 @@
 
 #define MAX_START_FILES 100     // Keep last 100 boot session files
 
+
+/////////////// Input pin definitions ///////////////
 #define BTN_AUTO        7       // AUTO button
 #define BTN_REJECT      6       // REJECT/E-STOP button
 #define SLOT1_A         5       // Slot 1 Sensor A (front)
@@ -17,6 +19,7 @@
 #define SLOT3_A         1       // Slot 3 Sensor A (front)
 #define SLOT3_B         0       // Slot 3 Sensor B (back)
 
+/////////////// Output pin definitions //////////////
 #define RELAY_AUTO      0       // AUTO relay to PLC
 #define LED_MACHINE_ON  1       // GREEN LED - Machine running indicator
 #define BUZZER_LED      2       // RED LED + Buzzer for reject alert and sensor beeps
