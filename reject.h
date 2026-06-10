@@ -29,6 +29,7 @@ void stop_monitoring()
 
 // Continuous monitoring function - detects B→A cheating sequence at any time
 // Runs continuously until AUTO or REJECT button is pressed
+// Checks if Sensor B was triggered, and then if Sensor A triggers afterward without counting
 void check_monitoring(uint8_t current_inputs)
 {
     if (!monitoring_active) 
