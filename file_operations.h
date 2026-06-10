@@ -17,7 +17,7 @@ bool check_spiffs_version()
         file = SPIFFS.open("/version.txt", "w");
         if (file) 
         {
-            file.println(SPIFFS_VERSION);  // Write current version
+            file.println(FIRMWARE_VERSION);  // Write current version
             file.close();
         }
         return true;
@@ -27,10 +27,10 @@ bool check_spiffs_version()
     int stored_version = file.readStringUntil('\n').toInt();  // Read version as integer
     file.close();  
     
-    // Check if stored version matches firmware's expected version
-    if (stored_version != SPIFFS_VERSION) 
+    // Check if stored version matches current firmware version
+    if (stored_version != FIRMWARE_VERSION) 
     {
-        Serial.printf("Version mismatch: stored=%d, expected=%d\n", stored_version, SPIFFS_VERSION);
+        Serial.printf("[FW] SPIFFS version mismatch: stored=%d, expected=%d\n", stored_version, FIRMWARE_VERSION);
         Serial.println("Reformatting SPIFFS for new firmware version...");
         
         // Reformat for new firmware version
@@ -43,7 +43,7 @@ bool check_spiffs_version()
             file = SPIFFS.open("/version.txt", "w");
             if (file) 
             {
-                file.println(SPIFFS_VERSION);
+                file.println(FIRMWARE_VERSION);
                 file.close();
             }
             Serial.println("SPIFFS updated to firmware version");

@@ -4,6 +4,43 @@
 #include <EEPROM.h>
 #include "config.h"
 
+// ─── Firmware version check ───────────────────────────────────────────────
+// Call this BEFORE init_filesystem() and init_eeprom().
+// Returns true if a version mismatch was detected (EEPROM reset triggered).
+// When FIRMWARE_VERSION is bumped in config.h, EEPROM magic is wiped so
+// init_eeprom() re-initializes all data, and SPIFFS is reformatted by
+// check_spiffs_version() inside init_filesystem().
+bool check_firmware_version()
+{
+    EEPROM.begin(EEPROM_SIZE);    // Safe to call before init_eeprom()
+
+    uint16_t stored = ((uint16_t)EEPROM.read(ADDR_FW_VERSION) << 8)
+                     | EEPROM.read(ADDR_FW_VERSION + 1);
+
+    if (stored == FIRMWARE_VERSION)
+    {
+        Serial.printf("[FW] Version OK: v%u\n", FIRMWARE_VERSION);
+        return false;
+    }
+
+    // Version changed (or device is brand-new)
+    Serial.println("============================================");
+    Serial.printf( "[FW] NEW FIRMWARE DETECTED: v%u -> v%u\n", stored, FIRMWARE_VERSION);
+    Serial.println("[FW] Wiping EEPROM & SPIFFS - starting fresh");
+    Serial.println("============================================");
+
+    // Invalidate the magic number so init_eeprom() re-initialises everything
+    EEPROM.write(ADDR_MAGIC,     0xFF);
+    EEPROM.write(ADDR_MAGIC + 1, 0xFF);
+
+    // Record the new firmware version
+    EEPROM.write(ADDR_FW_VERSION,     (FIRMWARE_VERSION >> 8) & 0xFF);
+    EEPROM.write(ADDR_FW_VERSION + 1,  FIRMWARE_VERSION        & 0xFF);
+
+    EEPROM.commit();
+    return true;
+}
+
 // Initialize EEPROM and check if it's first boot
 void init_eeprom() 
 {
@@ -39,6 +76,10 @@ void init_eeprom()
         EEPROM.write(ADDR_BOOT_NUMBER + 2, 0);
         EEPROM.write(ADDR_BOOT_NUMBER + 3, 1);
         
+        // Write current firmware version
+        EEPROM.write(ADDR_FW_VERSION,     (FIRMWARE_VERSION >> 8) & 0xFF);
+        EEPROM.write(ADDR_FW_VERSION + 1,  FIRMWARE_VERSION        & 0xFF);
+
         // Commit changes to EEPROM
         EEPROM.commit();
         

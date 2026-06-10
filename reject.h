@@ -31,7 +31,8 @@ void stop_monitoring()
 // Runs continuously until AUTO or REJECT button is pressed
 void check_monitoring(uint8_t current_inputs)
 {
-    if (!monitoring_active) return;  // Exit if monitoring is not active
+    if (!monitoring_active) 
+    return;  // Exit if monitoring is not active
     
     // Get the sensor pins for the monitored slot
     uint8_t sensor_a_pin = 0;

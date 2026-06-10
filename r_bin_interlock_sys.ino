@@ -1,4 +1,6 @@
 // Include necessary libraries and custom header files
+// This file serves as the main entry point for the ESP32 firmware, initializing all components and running the main loop.
+
 #include <Wire.h>                    // I2C communication library for PCF8574 modules
 #include "config.h"                  // Configuration settings and constants
 #include "eeprom_operations.h"       // EEPROM operations for critical data
@@ -13,7 +15,7 @@ void setup()
 {
     // Initialize serial communication at 115200 baud rate
     Serial.begin(115200);
-    delay(2000);   // Wait for serial port to stabilize
+    delay(1000);   // Wait for serial port to stabilize
     Serial.println("WELCOME ESP32 : REJECTION BIN INTERLOCKING SYSTEM ");
     
     // Initialize I2C communication with SDA on GPIO21 and SCL on GPIO22
@@ -32,6 +34,10 @@ void setup()
 
     // Initialize system components
     initWebServer();          // Start the web server for remote access
+
+    // Detect firmware version change - resets EEPROM and SPIFFS if version changed
+    check_firmware_version();
+
     init_filesystem();        // Mount SPIFFS for session logs
     
     // Initialize EEPROM and load critical data
