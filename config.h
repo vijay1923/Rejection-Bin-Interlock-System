@@ -5,6 +5,9 @@
 #define PCF2_ADDR       0x26    // Output PCF8574 relays & leds & buzers
 
 #define POLL_INTERVAL   20      // Polling interval in milliseconds
+#define I2C_RETRY_COUNT 3       // Retry count per I2C read/write transaction
+#define I2C_FAILSAFE_THRESHOLD 5 // Consecutive I2C failures before fail-safe lock
+#define BUTTON_DEBOUNCE_MS 120   // Minimum interval between valid button presses
 
 #define MAX_START_FILES 100     // Keep last 100 boot session files
 
@@ -69,6 +72,19 @@ bool monitoring_active = false;     // Is continuous monitoring active?
 uint8_t monitored_slot = 0;         // Which slot is being monitored (1, 2, or 3)
 uint8_t monitoring_last_sensor = 0; // Last sensor triggered: 1=SensorA, 2=SensorB
 bool part_counted = false;          // Has this part been counted yet?
+
+// I2C health monitoring
+uint16_t i2c_consecutive_failures = 0; // Consecutive failed I2C operations
+bool i2c_failsafe_latched = false;     // True after I2C fail-safe lock is triggered
+
+// Runtime diagnostics counters
+uint32_t i2c_total_failures = 0;          // Total failed I2C operations since boot
+uint32_t i2c_failsafe_trigger_count = 0;  // Number of fail-safe triggers since boot
+uint32_t debounce_filtered_count = 0;     // Number of filtered button bounce events
+uint32_t auto_button_valid_count = 0;     // Valid AUTO button press count
+uint32_t reject_button_valid_count = 0;   // Valid REJECT button press count
+unsigned long last_auto_press_ms = 0;     // Last accepted AUTO button timestamp
+unsigned long last_reject_press_ms = 0;   // Last accepted REJECT button timestamp
 
 
 // Forward declarations
