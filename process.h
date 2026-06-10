@@ -81,6 +81,7 @@ void auto_button_handler()
 }
 
 // Handler for REJECT button press - stops machine and enters rejection mode
+// In REJECT mode, waits for part confirmation via sensors before resuming
 void reject_button_handler() 
 {
     // If monitoring is active, count the part before new reject

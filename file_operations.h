@@ -81,7 +81,7 @@ void init_filesystem()
     double freeMB  = free  / (1024.0 * 1024.0);
     
     Serial.printf("Total: %.2f MB | Used: %.2f MB | Free: %.2f MB\n", totalMB, usedMB, freeMB);
-    Serial.println("------------------------------------------");
+    Serial.println("--------------------------------------------------");   
 }
 
 // Create new session file for current boot
