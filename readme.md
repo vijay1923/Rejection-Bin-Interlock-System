@@ -5,17 +5,17 @@
 
 ## 📖 Overview
 
-This project implements an advanced industrial rejection bin interlocking system using an ESP32 microcontroller. It ensures safety in manufacturing by stopping the machine when a defective part is detected and preventing restart until the rejected part is confirmed in the bin.
+This project implements an ESP32-based industrial rejection bin interlocking system. It stops the machine when a reject is triggered, waits for the operator to confirm the rejected part in the bin, and then resumes production after the confirmation sequence is validated.
 
 **Key Features:**
 - Three detection slots with dual-sensor confirmation (A→B sequence)
-- **Hybrid storage system** (EEPROM + SPIFFS for optimal performance)
-- **Boot-based session tracking** (separate count per power cycle)
+- **Hybrid storage system** using EEPROM for critical state and SPIFFS for session history
+- **Boot-based session tracking** with a separate count for each power cycle
 - **Lifetime reject count** (persists forever)
-- **Automatic file management** (keeps last 100 boot sessions, batch deletes old files)
+- **Automatic file management** that keeps the last 100 boot sessions
 - State persistence across power cycles
 - Visual/audio alerts for operator awareness
-- 500ms confirmation beep to operator
+- 500 ms confirmation beep for sensor events and alerts
 
 ---
 
@@ -46,27 +46,19 @@ This project implements an advanced industrial rejection bin interlocking system
 
 ### **Storage Architecture**
 ```
-┌─────────────────────────────────────────────┐
-│ EEPROM (512 bytes)                          │
-│ ┌─────────────────────────────────────────┐ │
-│ │ Address 0-1:   Magic Number (0xABCD)    │ │
-│ │ Address 2:     machine_mode (1 byte)    │ │
-│ │ Address 3-6:   lifetime_count (4 bytes) │ │
-│ │ Address 7-10:  boot_number (4 bytes)    │ │
-│ │ Address 11+:   Reserved (future use)    │ │
-│ └─────────────────────────────────────────┘ │
-└─────────────────────────────────────────────┘
+EEPROM (512 bytes)
+   Address 0-1   : Magic number (0xABCD)
+   Address 2     : machine_mode (AUTO / REJECT)
+   Address 3-6   : lifetime_count
+   Address 7-10  : boot_number
+   Address 11-12 : firmware version
 
-┌─────────────────────────────────────────────┐
-│ SPIFFS (1.3 MB)                             │
-│ ┌─────────────────────────────────────────┐ │
-│ │ /version.txt      - Firmware version    │ │
-│ │ /start_1.txt      - Boot 1 session      │ │
-│ │ /start_2.txt      - Boot 2 session      │ │
-│ │ ...                                     │ │
-│ │ /start_100.txt    - Boot 100 session    │ │
-│ └─────────────────────────────────────────┘ │
-└─────────────────────────────────────────────┘
+SPIFFS (~1.3 MB available on the selected partition)
+   /version.txt  : Firmware version tracking
+   /start_1.txt  : Boot 1 session log
+   /start_2.txt  : Boot 2 session log
+   ...
+   /start_100.txt: Boot 100 session log
 ```
 
 ### **Automatic File Management**
@@ -222,19 +214,18 @@ Boot 101: ⚡ DELETE start_1 to start_100
    
 4. A→B sequence confirmed
    ↓ Machine mode = AUTO (saved to EEPROM)
-   ↓ Monitoring mode: 5 seconds of anti-cheat surveillance
+   ↓ Continuous anti-cheat monitoring remains active
    
-5. Monitoring complete (no removal detected)
+5. The part is counted when the next cycle is finalized
    ↓ Lifetime count incremented (saved to EEPROM)
    ↓ Session count incremented (saved to SPIFFS)
-   ↓ Machine returns to AUTO mode
-   ↓ Ready for operator to press AUTO button
+   ↓ Ready for the next operator action
 ```
 
 ### **Cheat Detection (Anti-Removal)**
 ```
-During 5-second monitoring window after A→B sequence:
-  - If Sensor A triggers again (B→A) = CHEATING DETECTED
+While continuous monitoring is active after A→B confirmation:
+  - If Sensor A triggers again after Sensor B (B→A) = CHEATING DETECTED
   - Count NOT incremented
   - Machine stops immediately
   - System enters REJECT mode (saved to EEPROM)
@@ -254,7 +245,7 @@ During 5-second monitoring window after A→B sequence:
 | 2       | machine_mode      | 1 byte  | AUTO/REJECT state                | Every reject cycle |
 | 3-6     | lifetime_count    | 4 bytes | Total rejects (never resets)     | Every part confirmation |
 | 7-10    | boot_number       | 4 bytes | Power cycles                     | Every boot |
-| 11+     | Reserved          | -       | Future expansion                 | - |
+| 11-12   | firmware version  | 2 bytes | Detect firmware changes          | On firmware update |
 
 **EEPROM Characteristics:**
 - Write time: 3-4ms (instant)
@@ -320,7 +311,7 @@ If power lost AFTER EEPROM write:
 | Parameter            | Value                              |
 |----------------------|------------------------------------|
 | EEPROM size          | 512 bytes                          |
-| EEPROM used          | 11 bytes (2% utilization)          |
+| EEPROM used          | 13 bytes (3% utilization)          |
 | Session file size    | ~10 bytes per file                 |
 | Max session files    | 100 (configurable in `config.h`)   |
 | Total SPIFFS used    | ~1 KB for all session data         |
@@ -344,19 +335,25 @@ Subnet:              255.255.255.0
 ```
 URL: http://192.168.1.21
 
-Pages:
-├── Dashboard (/)            - Current system status, core data
-├── All Sessions (/sessions) - View all boot session files
-└── Download All (/downloadall) - Export all data
+Routes:
+├── /                 Dashboard
+├── /sessions         All boot session files
+├── /files            All files currently in SPIFFS
+├── /view?file=...    View a file in the browser
+├── /download?file=... Download a single file
+└── /downloadall      Export all available data as plain text
 ```
 
 ### **Web Dashboard Display**
-- Current boot number (from EEPROM)
-- Current session reject count (from SPIFFS)
-- Lifetime total rejects (from EEPROM)
-- Machine mode (from EEPROM: REJECT/AUTO)
-- Session file browser (start_1 through start_100)
+- Current boot number stored in EEPROM
+- Current session reject count stored in the current `/start_X.txt`
+- Lifetime total rejects stored in EEPROM
+- Machine mode stored in EEPROM (`REJECT` / `AUTO`)
+- Recent session history and file browser
 - File download functionality
+
+### **Important note**
+The dashboard shows placeholders for `/boot_number.txt`, `/total_count.txt`, and `/state.txt` in the code, but those files are not created by the firmware. The actual persistent files are `/version.txt` and the `/start_X.txt` session logs.
 
 ---
 
@@ -374,10 +371,10 @@ Parity:    None
 
 | Command | Parameters | Purpose | Example |
 |---------|------------|---------|---------|
-| `LIST` | None | Display all EEPROM & SPIFFS data | `LIST` |
+| `LIST` | None | Display EEPROM values and SPIFFS files | `LIST` |
 | `READ` | `<file_path>` | Display specific file contents | `READ /start_1.txt` |
 | `RST` | None | Restart ESP32 | `RST` |
-| `HELP` | None | Show command help menu | `HELP` |
+| `HELP` | None | Show the help menu and AP details | `HELP` |
 
 ### **Serial Output During Operation**
 
@@ -411,9 +408,9 @@ AUTO MODE - MACHINE RUNNING
 [SENSOR] Slot 1A detected - waiting for 1B...
 [SENSOR] Slot 1B detected - A→B sequence complete
 [EEPROM] Saved Machine Mode: AUTO
-[MONITORING] Started for Slot 1 - checking for removal (Duration: 5000 ms)
-[MONITORING] 5-second safety period complete - Part confirmed safe!
-Part Confirmed in Slot 1 (no B→A removal detected)
+[MONITORING] Started continuous monitoring for Slot 1
+[MONITORING] Part confirmed in Slot 1
+Part confirmed in Slot 1 (no B→A removal detected)
 Session Count (Boot #25): 1
 Lifetime Total Count: 1848
 [CONTINUOUS CHECK] Monitoring for post-count removal attempts...
@@ -467,11 +464,10 @@ Lifetime Count: 1852
 ### **Modifiable Parameters in `config.h`**
 
 ```cpp
-#define MAX_START_FILES 100      // Keep last N boot sessions
-#define POLL_INTERVAL   20       // Input polling frequency (ms)
-#define BEEP_DURATION   500      // Beep length (ms)
-#define MONITORING_DURATION 5000 // Anti-cheat monitoring time (ms)
-#define SPIFFS_VERSION  1        // Increment for file structure changes
+#define MAX_START_FILES 100   // Keep last N boot sessions
+#define POLL_INTERVAL   20    // Input polling frequency (ms)
+#define BEEP_DURATION   500   // Beep length (ms)
+#define FIRMWARE_VERSION 3    // Bump to reset EEPROM + SPIFFS on update
 ```
 
 ### **EEPROM Memory Map in `eeprom_operations.h`**
@@ -483,6 +479,7 @@ Lifetime Count: 1852
 #define ADDR_MACHINE_MODE     2       // Machine mode address
 #define ADDR_LIFETIME_COUNT   3       // Lifetime count address
 #define ADDR_BOOT_NUMBER      7       // Boot number address
+#define ADDR_FW_VERSION      11       // Firmware version address
 ```
 
 ---
@@ -493,7 +490,7 @@ Lifetime Count: 1852
 |---------|---------|
 | **Hybrid Storage** | EEPROM for critical data + SPIFFS for history |
 | **Multi-Slot Detection** | 3 slots, each with dual sensors (A & B) |
-| **Anti-Cheat Monitoring** | 5-second surveillance after A→B sequence |
+| **Anti-Cheat Monitoring** | Continuous surveillance after A→B sequence |
 | **Boot Tracking** | Counts power cycles and stores per-boot data |
 | **Lifetime Tracking** | Never-reset total reject counter in EEPROM |
 | **Automatic Cleanup** | Batch deletes old session files every 100 boots |

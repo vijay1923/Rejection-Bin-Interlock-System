@@ -32,7 +32,12 @@
 #define ADDR_MACHINE_MODE     2       // Address 2: Machine mode (1 byte)
 #define ADDR_LIFETIME_COUNT   3       // Address 3-6: Lifetime count (4 bytes)
 #define ADDR_BOOT_NUMBER      7       // Address 7-10: Boot number (4 bytes)
+#define ADDR_FW_VERSION       11      // Address 11-12: Firmware version (2 bytes)
 
+// ── Firmware version ──────────────────────────────────────────────────────────
+// Bump this number when uploading new firmware that should start fresh.
+// Both EEPROM (all counters/mode) and SPIFFS (all session files) will be wiped.
+#define FIRMWARE_VERSION      4
 
 // Beep duration constant
 #define BEEP_DURATION   500     // All beeps are 500ms
@@ -65,8 +70,6 @@ uint8_t monitored_slot = 0;         // Which slot is being monitored (1, 2, or 3
 uint8_t monitoring_last_sensor = 0; // Last sensor triggered: 1=SensorA, 2=SensorB
 bool part_counted = false;          // Has this part been counted yet?
 
-// SPIFFS version tracking
-#define SPIFFS_VERSION 1
 
 // Forward declarations
 void auto_button_handler();
