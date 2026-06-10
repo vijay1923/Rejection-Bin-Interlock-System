@@ -10,6 +10,8 @@
 // When FIRMWARE_VERSION is bumped in config.h, EEPROM magic is wiped so
 // init_eeprom() re-initializes all data, and SPIFFS is reformatted by
 // check_spiffs_version() inside init_filesystem().
+// This ensures that when you upload new firmware with changes to data structure
+// or logic, it starts with a clean slate and avoids compatibility issues.
 bool check_firmware_version()
 {
     EEPROM.begin(EEPROM_SIZE);    // Safe to call before init_eeprom()
