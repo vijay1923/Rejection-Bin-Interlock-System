@@ -19,7 +19,19 @@ This project implements an ESP32-based industrial rejection bin interlocking sys
 
 ---
 
-## 🆕 What's New in v3.0
+## 🆕 What's New in v4.0
+
+### **🛡️ Runtime Hardening (Current Build)**
+
+The current firmware includes additional runtime protection features:
+
+- **Non-blocking serial command parser** to avoid loop stalls
+- **I2C retry logic** for PCF8574 input/output transactions
+- **I2C fail-safe lock** after repeated consecutive bus failures
+- **Button debounce filtering** for AUTO/REJECT inputs
+- **Reduced web heap churn** through response pre-allocation and streaming
+
+These changes are aimed at long-run stability in production environments.
 
 ### **🚀 Hybrid Storage Architecture (EEPROM + SPIFFS)**
 
@@ -233,6 +245,18 @@ While continuous monitoring is active after A→B confirmation:
   - Part must be re-confirmed in bin before restart
 ```
 
+### **I2C Fail-safe Behavior**
+```
+If I2C communication repeatedly fails:
+   - Each read/write is retried (I2C_RETRY_COUNT)
+   - Consecutive failures are counted
+   - At threshold (I2C_FAILSAFE_THRESHOLD), system enters fail-safe
+   - Machine is forced to REJECT mode
+   - Relay is turned OFF
+   - Mode is persisted to EEPROM
+   - Triple beep alert is triggered
+```
+
 ---
 
 ## 💾 Data Persistence Architecture
@@ -376,6 +400,8 @@ Parity:    None
 | `RST` | None | Restart ESP32 | `RST` |
 | `HELP` | None | Show the help menu and AP details | `HELP` |
 
+**Serial handling note:** Command parsing is non-blocking and line-buffered for better loop responsiveness.
+
 ### **Serial Output During Operation**
 
 **Boot Sequence:**
@@ -464,10 +490,13 @@ Lifetime Count: 1852
 ### **Modifiable Parameters in `config.h`**
 
 ```cpp
-#define MAX_START_FILES 100   // Keep last N boot sessions
-#define POLL_INTERVAL   20    // Input polling frequency (ms)
-#define BEEP_DURATION   500   // Beep length (ms)
-#define FIRMWARE_VERSION 3    // Bump to reset EEPROM + SPIFFS on update
+#define MAX_START_FILES       100   // Keep last N boot sessions
+#define POLL_INTERVAL         20    // Input polling frequency (ms)
+#define I2C_RETRY_COUNT       3     // Retries per I2C transaction
+#define I2C_FAILSAFE_THRESHOLD 5    // Consecutive failures before lock
+#define BUTTON_DEBOUNCE_MS    120   // Min interval between valid button presses
+#define BEEP_DURATION         500   // Beep length (ms)
+#define FIRMWARE_VERSION      4     // Bump to reset EEPROM + SPIFFS on update
 ```
 
 ### **EEPROM Memory Map in `eeprom_operations.h`**
@@ -501,6 +530,9 @@ Lifetime Count: 1852
 | **LED/Buzzer Alerts** | Visual and audio feedback for reject mode |
 | **Relay Control** | Machine start/stop via digital relay output |
 | **I2C Expansion** | 8 inputs + 8 outputs via PCF8574 modules |
+| **I2C Fail-safe Lock** | Forces REJECT mode after repeated I2C faults |
+| **Button Debounce** | Filters bounce on AUTO/REJECT button edges |
+| **Non-blocking Serial** | Prevents command input from stalling control loop |
 
 ---
 
@@ -525,10 +557,12 @@ Lifetime Count: 1852
 |-----------------------|-----------------------|
 | Sensor poll rate      | 50 Hz (20ms interval) |
 | Edge detection        | Rising edge only      |
+| Button debounce       | 120 ms                |
 | Beep duration         | 500ms                 |
 | EEPROM write time     | 3-4ms                 |
 | SPIFFS write time     | 50-100ms              |
-| Boot time             | ~2 seconds            |
+| I2C retries/op        | 3                     |
+| I2C fail-safe threshold | 5 consecutive failures |
 | I2C Speed             | 100 kHz               |
 | EEPROM write cycles   | ~100,000 per cell     |
 | Flash write cycles    | ~10,000 per block     |
@@ -546,6 +580,16 @@ Lifetime Count: 1852
 ✅ **Automatic cleanup** - Prevents filesystem overflow  
 ✅ **Power-loss recovery** - Atomic EEPROM writes  
 ✅ **Fast response** - Critical writes complete in 3-4ms  
+✅ **I2C fail-safe lock** - Stops machine safely on repeated bus errors  
+✅ **Button debounce filter** - Reduces false trigger events  
+
+---
+
+## 🗂️ Change Tracking
+
+For a chronological list of firmware updates, see:
+
+- `readme_updates.md`
 
 ---
 
