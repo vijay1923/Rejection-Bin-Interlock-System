@@ -422,7 +422,8 @@ void handleSessions() {
 }
 
 // ─── Files page ──────────────────────────────────────────────────────────────
-void handleFiles() {
+void handleFiles()
+{
     String html = htmlHead("Files");
     html.reserve(8192);
     html += htmlNav("files");
