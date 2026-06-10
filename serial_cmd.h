@@ -104,7 +104,7 @@ void listAllFiles()
 
     // Loop through all possible session files (1 to 100)
     char path[20];  // Buffer to hold file path string
-    for (int i = 1; i <= 100; i++) 
+    for (int i = 1; i <= 100; i++)   // 
     {
         // Construct file path for each session file
         snprintf(path, sizeof(path), "/start_%d.txt", i);
@@ -120,16 +120,14 @@ void listAllFiles()
 }
 
 // Main function to handle incoming serial commands
-void handleSerialCommands()
+void processSerialCommand(const String &rawCmd)
 {
-    // Exit if no serial data is available
-    if (!Serial.available())
-        return;
-
-    // Read command until newline character
-    String cmd = Serial.readStringUntil('\n');
+    String cmd = rawCmd;
     cmd.trim();           // Remove leading/trailing whitespace
     cmd.toUpperCase();    // Convert to uppercase for case-insensitive comparison
+
+    if (cmd.length() == 0)
+        return;
 
     // Process HELP command - display help information
     if (cmd == "HELP" ) 
@@ -161,6 +159,42 @@ void handleSerialCommands()
     else if (cmd.length() > 0)
     {
         Serial.println("ERR: UNKNOWN CMD - Type HELP for commands");
+    }
+}
+
+// Main function to handle incoming serial commands (non-blocking)
+void handleSerialCommands()
+{
+    static char commandBuffer[96];
+    static uint8_t commandIndex = 0;
+
+    while (Serial.available() > 0)
+    {
+        char c = (char)Serial.read();
+
+        // Handle end-of-line (supports both \n and \r\n)
+        if (c == '\n' || c == '\r')
+        {
+            if (commandIndex > 0)
+            {
+                commandBuffer[commandIndex] = '\0';
+                processSerialCommand(String(commandBuffer));
+                commandIndex = 0;
+            }
+            continue;
+        }
+
+        // Append if buffer has space
+        if (commandIndex < sizeof(commandBuffer) - 1)
+        {
+            commandBuffer[commandIndex++] = c;
+        }
+        else
+        {
+            // Overflow protection: discard current line and notify once
+            commandIndex = 0;
+            Serial.println("ERR: CMD TOO LONG");
+        }
     }
 }
 
