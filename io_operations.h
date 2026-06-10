@@ -8,6 +8,7 @@ void i2c_enter_failsafe(const char* source)
         return;
 
     i2c_failsafe_latched = true;
+    i2c_failsafe_trigger_count++;
 
     // Stop all active monitoring/state machine progression
     stop_monitoring();
@@ -32,6 +33,8 @@ void i2c_enter_failsafe(const char* source)
 
 void i2c_record_failure(const char* source)
 {
+    i2c_total_failures++;
+
     if (i2c_consecutive_failures < 65535)
     {
         i2c_consecutive_failures++;
