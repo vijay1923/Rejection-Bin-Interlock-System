@@ -42,3 +42,11 @@ Use this file to track every important code change so the latest behavior is alw
 - **Why:** Repeated `String` growth and chunk conversions can fragment heap over long runtimes.
 - **Runtime Impact:** Lower heap fragmentation risk and improved long-run stability of web endpoints.
 - **Validation:** No editor-reported compile/lint errors after change.
+
+### 2026-06-10 — I2C retry and fail-safe lock implementation
+- **Type:** Fix (High Priority Runtime)
+- **Files Changed:** `config.h`, `io_operations.h`
+- **Summary:** Added I2C retry counts for PCF8574 input/output operations, consecutive failure tracking, and automatic fail-safe lock to REJECT mode after threshold failures.
+- **Why:** Prevent silent runtime degradation when I2C bus glitches occur and ensure the machine transitions to a safe state.
+- **Runtime Impact:** Better resilience to transient I2C failures and deterministic safe behavior under repeated I2C faults.
+- **Validation:** No editor-reported compile/lint errors after change.
