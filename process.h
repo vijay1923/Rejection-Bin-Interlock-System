@@ -7,16 +7,38 @@ void reject_button_handler();
 // Main function to process detected input events (button presses or sensor triggers)
 void process_inputs(uint8_t edge) 
 {
+    unsigned long now = millis();
+
     // Check if AUTO button was pressed (rising edge detected)
     if (edge & (1 << BTN_AUTO)) 
     {
-        auto_button_handler();  // Handle AUTO button press
+        if (now - last_auto_press_ms >= BUTTON_DEBOUNCE_MS)
+        {
+            last_auto_press_ms = now;
+            auto_button_valid_count++;
+            auto_button_handler();  // Handle AUTO button press
+        }
+        else
+        {
+            debounce_filtered_count++;
+            Serial.println("[DEBOUNCE] Ignored AUTO bounce");
+        }
     }
     
     // Check if REJECT button was pressed (rising edge detected)
     if (edge & (1 << BTN_REJECT)) 
     {
-        reject_button_handler();  // Handle REJECT button press
+        if (now - last_reject_press_ms >= BUTTON_DEBOUNCE_MS)
+        {
+            last_reject_press_ms = now;
+            reject_button_valid_count++;
+            reject_button_handler();  // Handle REJECT button press
+        }
+        else
+        {
+            debounce_filtered_count++;
+            Serial.println("[DEBOUNCE] Ignored REJECT bounce");
+        }
     }
     
     // Check for slot sensor detection (handles A and B sensor sequences)
