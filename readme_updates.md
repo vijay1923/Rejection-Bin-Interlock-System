@@ -50,3 +50,11 @@ Use this file to track every important code change so the latest behavior is alw
 - **Why:** Prevent silent runtime degradation when I2C bus glitches occur and ensure the machine transitions to a safe state.
 - **Runtime Impact:** Better resilience to transient I2C failures and deterministic safe behavior under repeated I2C faults.
 - **Validation:** No editor-reported compile/lint errors after change.
+
+### 2026-06-10 — Button debounce + runtime diagnostics counters
+- **Type:** Improvement (Hardening)
+- **Files Changed:** `config.h`, `process.h`, `io_operations.h`, `serial_cmd.h`
+- **Summary:** Added button debounce filtering for AUTO/REJECT edges and introduced runtime counters for I2C failures, fail-safe triggers, and accepted/filtered button events, visible through `LIST` serial output.
+- **Why:** Reduce false triggers from switch bounce and make field troubleshooting faster with built-in diagnostics visibility.
+- **Runtime Impact:** More stable button behavior and improved observability of runtime health.
+- **Validation:** No editor-reported compile/lint errors after change.
