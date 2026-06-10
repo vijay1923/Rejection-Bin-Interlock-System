@@ -86,6 +86,7 @@ void readFile(const String &filepath)
 }
 
 // Function to list and display all files stored in SPIFFS
+// This includes core files (EEPROM data) and session files (start_X.txt)
 void listAllFiles()
 {
     Serial.println();
