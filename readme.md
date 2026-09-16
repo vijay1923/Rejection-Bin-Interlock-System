@@ -19,6 +19,39 @@ This project implements an ESP32-based industrial rejection bin interlocking sys
 
 ---
 
+flowchart LR
+    A[Production Machine / PLC] --> B[Part Detection Sensor]
+    B --> C[Microcontroller<br/>Rejection Controller]
+
+    C --> D[Defect Detection / Reject Signal]
+    D --> E[Reject Actuator<br/>Air Jet / Solenoid / Diverter]
+
+    E --> F[Rejected Part]
+    F --> G[Rejection Bin]
+
+    G --> H[Bin Presence / Weight / Door Sensor]
+    H --> C
+
+    C --> I[Verification Logic]
+    I --> J{Rejected Part<br/>Accounted For?}
+
+    J -- Yes --> K[Interlock Released]
+    K --> A
+
+    J -- No --> L[Machine Stop / Interlock Active]
+    L --> M[Alarm / Warning Lamp / HMI]
+    M --> N[Operator Inspection or Reset]
+    N --> C
+
+    O[Emergency Stop / Safety Circuit] --> P[Safety Relay]
+    P --> A
+    P --> C
+
+
+---
+
+
+
 ## 🆕 What's New in v4.0
 
 ### **🛡️ Runtime Hardening (Current Build)**
