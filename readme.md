@@ -17,6 +17,62 @@ This project implements an ESP32-based industrial rejection bin interlocking sys
 - Visual/audio alerts for operator awareness
 - 500 ms confirmation beep for sensor events and alerts
 
+The following Mermaid block diagram shows the system architecture and safe-state interlocks.
+
+```mermaid
+flowchart TD
+    subgraph Operator_Inputs["Operator inputs and rejection slots"]
+        AUTO["AUTO button"]
+        REJECT["REJECT button"]
+        subgraph Slot_1["Slot 1"]
+            S1A["Sensor 1A"]
+            S1B["Sensor 1B"]
+        end
+        subgraph Slot_2["Slot 2"]
+            S2A["Sensor 2A"]
+            S2B["Sensor 2B"]
+        end
+        subgraph Slot_3["Slot 3"]
+            S3A["Sensor 3A"]
+            S3B["Sensor 3B"]
+        end
+    end
+
+    IN["PCF8574 input expander<br/>I2C address 0x25"]
+    ESP["ESP32 controller<br/>Interlock logic<br/>- debounce<br/>- I2C retry and fail-safe lock<br/>- A→B confirmation<br/>- anti-cheat B→A detection<br/>- reject counting"]
+    OUT["PCF8574 output expander<br/>I2C address 0x26"]
+    EEPROM["EEPROM<br/>persistent machine mode<br/>lifetime count<br/>boot number<br/>firmware version"]
+    SPIFFS["SPIFFS<br/>/start_X.txt session logs<br/>/version.txt"]
+    WEB["Wi-Fi AP and web dashboard"]
+    SERIAL["Serial command interface"]
+    SAFE["Safe state<br/>REJECT or fault forces machine stop<br/>alert output<br/>persisted REJECT mode"]
+
+    AUTO --> IN
+    REJECT --> IN
+    S1A --> IN
+    S1B --> IN
+    S2A --> IN
+    S2B --> IN
+    S3A --> IN
+    S3B --> IN
+
+    IN --> ESP
+    ESP --> OUT
+    ESP <--> EEPROM
+    ESP <--> SPIFFS
+    ESP --> WEB
+    ESP --> SERIAL
+
+    OUT --> PLC["PLC or machine AUTO relay"]
+    OUT --> GREEN["Green machine-running LED"]
+    OUT --> ALERT["Red LED and buzzer alert"]
+
+    REJECT --> SAFE
+    ESP --> SAFE
+    SAFE --> OUT
+    SAFE --> EEPROM
+```
+
 ---
 
 ## 🆕 What's New in v4.0
