@@ -8,6 +8,8 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
+// Access point credentials
+
 #define AP_SSID     "RejectionBin_AP"
 #define AP_PASSWORD "rejectionbin"
 #define AP_IP       IPAddress(192, 168, 1, 21)
